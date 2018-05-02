@@ -27,12 +27,12 @@ app.use(knexLogger(knex));
 
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use("/styles", sass({
-  src: __dirname + "/styles",
-  dest: __dirname + "/public/styles",
-  debug: true,
-  outputStyle: 'expanded'
-}));
+// app.use("/styles", sass({
+//   src: __dirname + "/styles",
+//   dest: __dirname + "/public/styles",
+//   debug: true,
+//   outputStyle: 'expanded'
+// }));
 app.use(express.static("public"));
 
 // Mount all resource routes
@@ -41,6 +41,16 @@ app.use("/api/users", usersRoutes(knex));
 // Home page
 app.get("/", (req, res) => {
   res.render("index");
+});
+
+// User profile
+app.get("/user/", (req, res) => {
+  res.render("user_profile");
+});
+
+// View map
+app.get("/map/", (req, res) => {
+  res.render("show_map");
 });
 
 app.listen(PORT, () => {
