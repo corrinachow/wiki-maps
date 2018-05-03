@@ -18,7 +18,6 @@ exports.seed = function(knex, Promise) {
       });
     })
     .then(function(favourites) {
-      console.log(favourites);
       return knex("favourites").insert(favourites);
     })
     .catch(err => {
