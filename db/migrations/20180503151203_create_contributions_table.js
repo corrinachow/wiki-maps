@@ -1,17 +1,19 @@
 exports.up = function(knex, Promise) {
   return knex.schema.createTable("contributions", function(table) {
     table.increments("id").primary();
-    table.string("action", 10);
+    table.string("action");
     table
       .integer("user_id")
       .references("id")
       .inTable("users")
-      .notNull();
+      .notNull()
+      .onDelete("cascade");
     table
       .integer("map_id")
       .references("id")
       .inTable("maps")
-      .notNull();
+      .notNull()
+      .onDelete("cascade");
   });
 };
 
