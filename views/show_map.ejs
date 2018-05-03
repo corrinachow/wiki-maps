@@ -6,6 +6,7 @@
   <!-- External CSS -->
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
   <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.11/css/all.css" integrity="sha384-p2jx59pefphTFIpeqCcISO9MdVfIm4pNnsL08A6v5vaQc4owkQqxMV8kg4Yvhaw/" crossorigin="anonymous">
   <!-- Bootstrap core CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
@@ -47,7 +48,47 @@
             </form>
             <div id="formatted-address"></div>
             <script type="text/javascript" src="/scripts/createMap.js"></script>
-          </div>
+ <form>
+  <div class="form-group">
+    <label for="marker-title">Title</label>
+    <input type="text" class="form-control" id="marker-title" placeholder="title">
+  </div>
+   <fieldset class="form-group">
+    <legend>Select an icon</legend>
+    <div class="form-check">
+      <label class="form-check-label">
+        <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+        <i class="fas fa-utensils"></i>
+      </label>
+    </div>
+    <div class="form-check">
+    <label class="form-check-label">
+        <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios2" value="option2">
+        <i class="fas fa-coffee"></i>
+      </label>
+    </div>
+    <div class="form-check disabled">
+    <label class="form-check-label">
+        <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios3" value="option3">
+        <i class="fas fa-bicycle"></i>
+      </label>
+    </div>
+  </fieldset>
+  <div class="form-group">
+    <label for="exampleInputFile">Upload a photo</label>
+    <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp">
+    <small id="fileHelp" class="form-text text-muted">This is some placeholder block-level help text for the above input. It's a bit lighter and easily wraps to a new line.</small>
+    <label for="marker-title">Image Url</label>
+    <input type="text"  id="marker-title" placeholder="title">
+  </div>
+  <div class="form-group">
+    <label for="exampleTextarea">Description</label>
+    <textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
+  </div>
+
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+  </div>
         </div>
         <div id="map-info" class="my-4">
           <h3 class="d-inline my-2">by Username</h3>
