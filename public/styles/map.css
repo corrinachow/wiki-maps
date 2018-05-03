@@ -1,0 +1,15 @@
+#map-canvas {
+  height:auto;
+  width:100%;
+}
+
+#form-container {
+  margin:0 auto;
+  width:600px;
+  background-color: white;
+  border:1px solid #eee;
+}
+
+#form-contianer form {
+  margin: 0 auto;
+}
