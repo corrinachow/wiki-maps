@@ -28,12 +28,15 @@ module.exports = knex => {
         });
     })
 
-router.post("/new", (req, res) =>{
+router.post('/new',(req, res) =>{
+let mapLocation = req.body.location
+let mapTitle = req.body.map_title
+const formInput = {
+  location:mapLocation,
+  title:mapTitle
+}
 
-let location = req.body.location
-let title = req.body.map_title
-
-
+res.send(formInput)
 
 })
 

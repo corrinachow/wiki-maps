@@ -1,18 +1,16 @@
 let map
 let marker
 
-function geocode(event){
+function geocode(input){
 
   event.preventDefault();
 
-  let location = document.getElementById('location-input').value;
-  let title = document.getElementById('map-title-input').value;
-  console.log(location)
-  console.log(title)
+  console.log(input,'inside geocode')
+
 
   axios.get( "https://maps.googleapis.com/maps/api/geocode/json",{
     params:{
-      address:location,
+      address:input.location,
       key:'AIzaSyCDMocOMHEh8J4yiu_I8QMurFjMgBfrldk'
     }
   })
@@ -36,7 +34,7 @@ function geocode(event){
     console.log(formattedAddress)
     console.log(document.getElementById('map-location'))
     document.getElementById('map-location').textContent = formattedAddress;
-    document.getElementById('map-title').textContent = title;
+    document.getElementById('map-title').textContent = input.title;
 
     if(($("#marker-input").css('display') === 'none')){
           $("#marker-input").toggle(500,"linear");
@@ -55,11 +53,21 @@ function geocode(event){
   console.log(geocode)
 }
 
+  $("#location-form").on("submit",function(event){
 
-let locationForm = document.getElementById('location-form');
-console.log(locationForm);
+  event.preventDefault();
 
-locationForm.addEventListener('submit',geocode)
+  $.ajax({
+      type: 'POST',
+      url: '/api/maps/new',
+      data: $( this ).serialize(),
+      success: function(data){
+        console.log('success')
+        geocode(data)
+      }
+
+})
+});
 
 function initMap(){
     //map options
@@ -71,9 +79,7 @@ function initMap(){
 
            console.log(options)
     //new map
-map = new google.maps.Map(document.getElementById('map-canvas'),options){
-
-}
+map = new google.maps.Map(document.getElementById('map-canvas'),options)
 
 console.log(document.getElementById('map-canvas'))
     //listen for click on map
@@ -136,22 +142,6 @@ google.maps.event.addListener(map,'click',function(event){
 
 
 //submit to database
-
-//   $("#location-form").on("submit",function(event){
-
-//   event.preventDefault();
-
-//   $.ajax({
-//       type: 'POST',
-//       url: '/maps/new',
-//       data: $( this ).serialize(),
-//       success: function(data){
-//         geocode()
-//       }
-
-// })
-// });
-
 
 
 // changing icons ( optional )

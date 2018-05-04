@@ -19,7 +19,6 @@
 
   <!-- Internal Javascript -->
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
-  <script type="text/javascript" src="/scripts/app.js"></script>
 
 </head>
 
@@ -42,11 +41,11 @@
             <form id ='location-form'>
              <div class="form-group">
                <h2 id ='text-center'>Name of Map</h2>
-                <input type="text" class="form-control" id="map-title-input" placeholder="Best coffee ever!" name="map_title">
+                <input type="text" class="form-control" id="map-title-input" placeholder="Best coffee ever!" name="map_title" action="api/map/new" method="POST">
               </div>
             <div id="enter-location">
               <h2 id ='text-center'>Location</h2>
-              <input type="text" id='location-input' class="form-control form-control-lg" placeholder="Toronto" name = "location">
+              <input type="text" id='location-input' class="form-control form-control-lg" placeholder="Toronto" name="location" action="api/map/new" method="POST">
               <br>
               <button type = 'submit' class='btn btn-primary btn-block'>Submit</button>
             </form>
