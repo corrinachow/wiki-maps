@@ -10,10 +10,7 @@ function createMapElement(map) {
     .append(
       $("<img>")
         .addClass("card-img-top")
-        .attr(
-          "src",
-          "http://via.placeholder.com/288x225"
-        )
+        .attr("src", "http://via.placeholder.com/288x225")
     );
 
   return $mapContainer.append($mapImg.append($mapBody));
