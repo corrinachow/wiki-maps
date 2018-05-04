@@ -6,7 +6,9 @@ function geocode(event){
   event.preventDefault();
 
   let location = document.getElementById('location-input').value;
+  let title = document.getElementById('map-title-input').value;
   console.log(location)
+  console.log(title)
 
   axios.get( "https://maps.googleapis.com/maps/api/geocode/json",{
     params:{
@@ -21,11 +23,6 @@ function geocode(event){
 
     //formatted Address
     let formattedAddress = response.data.results[0].formatted_address;
-    let formattedAddressOutput = `
-    <ul class="list-group">
-    <li class='list-group-item'>${formattedAddress}<li>
-    </ul>
-    `;
 
     //Geometry
 
@@ -36,9 +33,18 @@ function geocode(event){
 
 
     //output to app
-    document.getElementById('formatted-address').innerHTML = formattedAddressOutput
+    console.log(formattedAddress)
+    console.log(document.getElementById('map-location'))
+    document.getElementById('map-location').textContent = formattedAddress;
+    document.getElementById('map-title').textContent = title;
+
+    if(($("#marker-input").css('display') === 'none')){
+          $("#marker-input").toggle(500,"linear");
+          $("#location-form").slideUp();
+        }
 
     return map.setCenter(new google.maps.LatLng(lat,lng) );
+
 
   })
 
@@ -65,22 +71,16 @@ function initMap(){
 
            console.log(options)
     //new map
-    map = new google.maps.Map(document.getElementById('map-canvas'),options);
+map = new google.maps.Map(document.getElementById('map-canvas'),options){
 
-    console.log(document.getElementById('map-canvas'))
+}
+
+console.log(document.getElementById('map-canvas'))
     //listen for click on map
+google.maps.event.addListener(map,'click',function(event){
 
-    google.maps.event.addListener(map,'click',function(event){
-
-        // adds maker to map by clicking on it
-        addMarker({coords:event.latLng})
-
-        if(($("#marker-input").css('display') === 'none')){
-          $("#marker-input").toggle(500,"linear");
-          $("#enter-location").slideUp();
-        }
-
-  });
+    addMarker({coords:event.latLng})
+});
 
 };
 
@@ -101,12 +101,6 @@ function initMap(){
             draggable: true
         });
     }
-
-
-      // check for icon image
-      if(props.iconImage){
-        marker.setIcon(props.iconImage)
-      }
 
     // check for eventlistner
     if(props.desc){
@@ -141,22 +135,32 @@ function initMap(){
 
 
 
-// function initialize() {
-//     var centerPosition = new google.maps.LatLng(38.713107, -90.42984);
-//     var options = {
-//         zoom: 6,
-//         center: centerPosition,
-//         mapTypeId: google.maps.MapTypeId.ROADMAP
-//     };
-//     map = new google.maps.Map($('#map')[0], options);
+//submit to database
 
-//     google.maps.event.addListener(map, 'click', function (evt) {
-//         placeMarker(evt.latLng);
-//     });
-// }
-// google.maps.event.addDomListener(window, 'load', initialize);
-// // constructor fucntions
+//   $("#location-form").on("submit",function(event){
 
+//   event.preventDefault();
+
+//   $.ajax({
+//       type: 'POST',
+//       url: '/maps/new',
+//       data: $( this ).serialize(),
+//       success: function(data){
+//         geocode()
+//       }
+
+// })
+// });
+
+
+
+// changing icons ( optional )
+
+// $('input[type=radio][name="optionsRadios"]').change(function() {
+//   if ($("input[name=optionsRadios]:checked")){
+//     marker.setIcon($("input[name=optionsRadios]:checked").next().attr(''))
+//   }
+// });
 
 
 

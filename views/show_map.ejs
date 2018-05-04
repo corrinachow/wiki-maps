@@ -12,7 +12,6 @@
 
   <!-- Custom CSS -->
   <link rel="stylesheet" href="/styles/album.css" type="text/css" />
-  <!-- <link rel="stylesheet" href="/styles/maps.css" type="text/css" /> -->
 
   <!--  External Javascript  -->
 
@@ -30,9 +29,9 @@
     <!-- Page Content -->
     <div class="container">
       <!-- Map Heading -->
-      <h1 class="my-4">Map title
-        <small>Secondary Text</small>
+      <h1 class="my-4" id = "map-title">Map title
       </h1>
+      <p id="map-location">Secondary Text</p>
       <!-- Map Row -->
       <div class="row">
         <!-- <div class="col-md-8"> -->
@@ -40,47 +39,29 @@
          <!-- find location -->
          <div class="col-md-4">
           <div class="container">
-            <div id="enter-location">
-              <h2 id ='text-center'>Enter Location</h2>
             <form id ='location-form'>
-              <input type="text" id='location-input' class="form-control form-control-lg">
+             <div class="form-group">
+               <h2 id ='text-center'>Name of Map</h2>
+                <input type="text" class="form-control" id="map-title-input" placeholder="Best coffee ever!">
+              </div>
+            <div id="enter-location">
+              <h2 id ='text-center'>Location</h2>
+              <input type="text" id='location-input' class="form-control form-control-lg" placeholder="Toronto">
               <br>
               <button type = 'submit' class='btn btn-primary btn-block'>Submit</button>
             </form>
             <div id="formatted-address"></div>
-            <script type="text/javascript" src="/scripts/createMap.js"></script>
           </div>
 
               <!-- marker form -->
 
             <!-- title -->
         <form id="marker-input" style="display:none">
-              <div class="form-group">
-                <input type="text" class="form-control" id="marker-title" placeholder="Name of Map: Best Coffee in Town!">
-              </div>
+           <div class="form-group">
+            <label for="marker-title">Title</label>
+          <input type="text" name="marker-title" class="form-control">
+        </div>
 
-            <!-- icons -->
-              <fieldset class="form-group">
-                <legend>Select an icon</legend>
-                <div class="form-check">
-                  <label class="form-check-label">
-                    <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1" checked>
-                    <i class="fas fa-utensils"></i>
-                  </label>
-                </div>
-                <div class="form-check">
-                  <label class="form-check-label">
-                    <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios2" value="option2">
-                    <i class="fas fa-coffee"></i>
-                  </label>
-                </div>
-                <div class="form-check disabled">
-                  <label class="form-check-label">
-                    <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios3" value="option3">
-                    <i class="fas fa-bicycle"></i>
-                  </label>
-                </div>
-              </fieldset>
           <!-- upload photos -->
               <div class="form-group">
                 <label for="exampleInputFile">Upload a photo</label>
@@ -109,12 +90,37 @@
       </div>
     </main>
     <% include ./partials/_footer %>
+    <script type="text/javascript" src="/scripts/createMap.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/holder/2.9.4/holder.min.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script async defer
+    <script
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDwqMRP7XfcwpGlHAXUyhv5c1_1jFKs84c&callback=initMap">
     </script>
   </body>
 
   </html>
+
+
+              <!-- icons -->
+          <!--     <fieldset class="form-group">
+                <legend>Select an icon</legend>
+                <div class="form-check">
+                  <label class="form-check-label">
+                    <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1">
+                    <img src='https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'>
+                  </label>
+                </div>
+                <div class="form-check">
+                  <label class="form-check-label">
+                    <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios2" value="option2">
+                    <img src='https://developers.google.com/maps/documentation/javascript/examples/full/images/hiker.png'>
+                  </label>
+                </div>
+                <div class="form-check disabled">
+                  <label class="form-check-label">
+                    <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios3" value="option3">
+                    <i class="fas fa-bicycle"></i>
+                  </label>
+                </div>
+              </fieldset> -->
