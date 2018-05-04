@@ -1,5 +1,5 @@
 const faker = require("faker");
-let markers = 50;
+let markers = 10;
 
 exports.seed = function(knex, Promise) {
   return Promise.resolve(["users", "maps"])
