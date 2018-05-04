@@ -4,6 +4,11 @@ const express = require("express");
 const router = express.Router();
 
 module.exports = knex => {
+
+  router.get('/new',(req,res)=> {
+      res.send('new maps page')
+    }),
+
   router.get("/", (req, res) => {
     knex
       .select("*")
@@ -21,7 +26,9 @@ module.exports = knex => {
         .then(map => {
           res.json(map);
         });
-    });
+    })
+
+
 
   return router;
 };

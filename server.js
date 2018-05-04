@@ -54,27 +54,27 @@ app.use("/api/users", usersRoutes(knex));
 app.use("/api/maps", mapsRoutes(knex));
 app.use("/api/favourites", favouritesRoutes(knex));
 app.use("/api/contributions", contributionsRoutes(knex));
+
 app.use("/api/markers", markersRoutes(knex));
+
+// Mount routes
 app.use("/login", loginRoutes());
+
+
 
 // Home page
 app.get("/", (req, res) => {
   res.render("index");
 });
 
-
+//TODO: Delete this section and convert to SPA on completion
 // User profile
-app.get("/user/", (req, res) => {
+app.get("/users/:username", (req, res) => {
   res.render("user_profile");
 });
 
-// View map
-app.get("/map/", (req, res) => {
-  res.render("show_map");
-});
-
-app.get("/map/:id", (req, res) => {
-
+// View/edit map
+app.get("/maps/:id", (req, res) => {
   res.render("show_map");
 });
 

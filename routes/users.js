@@ -16,7 +16,7 @@ function getMapMarkers(data) {
     });
   }
   return result;
-};
+}
 
 function aggregateData(data) {
   const userData = {};
@@ -52,7 +52,7 @@ function aggregateData(data) {
     };
     const filterContr = userData.contributions.filter(
       fContrObj => fContrObj.marker_id === contrObj.marker_id
-      );
+    );
 
     if (filterMap.length < 1) {
       userData.maps.push(mapObj);
@@ -93,7 +93,6 @@ module.exports = knex => {
         )
         .where({ "users.id": req.params.id })
         .then(user => {
-          console.log(user)
           const parseData = aggregateData(user);
           res.json(parseData);
         });
@@ -102,7 +101,11 @@ module.exports = knex => {
       knex("favourites")
         .join("users", "users.id", "favourites.user_id")
         .join("maps", "maps.id", "favourites.map_id")
-        .select("map_id", "title", "coordinates")
+        .select(
+          "maps.id as maps_id",
+          "maps.title as map_title",
+          "maps.coordinates as map_coordinates"
+        )
         .where({ "users.id": req.params.id })
         .then(favourites => {
           res.json(favourites);
