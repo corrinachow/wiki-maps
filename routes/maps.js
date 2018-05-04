@@ -28,8 +28,22 @@ module.exports = knex => {
         });
     })
 
+router.post("/new", (req, res) =>{
 
+let location = req.body.location
+let title = req.body.map_title
+
+
+
+})
 
   return router;
 };
+
+
+
+
+
+
+
 
