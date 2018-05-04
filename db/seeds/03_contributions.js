@@ -1,5 +1,5 @@
 const faker = require("faker");
-let contributions = 50;
+let contributions = 10;
 
 exports.seed = function(knex, Promise) {
   return Promise.resolve(["users", "maps"])
