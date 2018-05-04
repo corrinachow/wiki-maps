@@ -61,6 +61,11 @@ app.get("/map/", (req, res) => {
   res.render("show_map");
 });
 
+app.get("/map/:id", (req, res) => {
+
+  res.render("show_map");
+});
+
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
 });
