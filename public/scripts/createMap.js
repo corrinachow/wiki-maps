@@ -1,17 +1,18 @@
-let map = null;
+let map
+let marker
 
 function geocode(event){
 
-event.preventDefault();
+  event.preventDefault();
 
-   let location = document.getElementById('location-input').value;
-   console.log(location)
+  let location = document.getElementById('location-input').value;
+  console.log(location)
 
-   axios.get( "https://maps.googleapis.com/maps/api/geocode/json",{
+  axios.get( "https://maps.googleapis.com/maps/api/geocode/json",{
     params:{
       address:location,
       key:'AIzaSyCDMocOMHEh8J4yiu_I8QMurFjMgBfrldk'
-   }
+    }
   })
 
   .then(function(response){
@@ -22,8 +23,8 @@ event.preventDefault();
     let formattedAddress = response.data.results[0].formatted_address;
     let formattedAddressOutput = `
     <ul class="list-group">
-      <li class='list-group-item'>${formattedAddress}<li>
-      </ul>
+    <li class='list-group-item'>${formattedAddress}<li>
+    </ul>
     `;
 
     //Geometry
@@ -41,11 +42,11 @@ event.preventDefault();
 
   })
 
-   .catch(function(error){
+  .catch(function(error){
     console.log(error)
-   })
+  })
 
-   console.log(geocode)
+  console.log(geocode)
 }
 
 
@@ -60,20 +61,26 @@ function initMap(){
       zoom:14,//max is 14
       center:{lat:45.5017,
              lng:-73.5673} // center of map
-            }
+           }
 
-            console.log(options)
+           console.log(options)
     //new map
     map = new google.maps.Map(document.getElementById('map-canvas'),options);
 
     console.log(document.getElementById('map-canvas'))
     //listen for click on map
+
     google.maps.event.addListener(map,'click',function(event){
+
         // adds maker to map by clicking on it
         addMarker({coords:event.latLng})
-        $('#form').css('display','block');
-      });
 
+        if(($("#marker-input").css('display') === 'none')){
+          $("#marker-input").toggle(500,"linear");
+          $("#enter-location").slideUp();
+        }
+
+  });
 
 };
 
@@ -81,11 +88,19 @@ function initMap(){
 
     //add marker function
     function addMarker(props){
-      let marker = new google.maps.Marker({
-        position:props.coords,
-        map:map,
-          // icon:props.iconImage
+      console.log(props.coords)
+      if (marker) {
+        //if marker already was created change positon
+        marker.setPosition(props.coords);
+
+    } else {
+        //create a marker
+        marker = new google.maps.Marker({
+            position:props.coords,
+            map: map,
+            draggable: true
         });
+    }
 
 
       // check for icon image
@@ -99,7 +114,8 @@ function initMap(){
        content:'<h1>'+ props.desc + '</h1>'})
 
       marker.addListener('click',function(){
-       infoWindow.open(map,marker);
+      infoWindow.open(map,marker);
+
      })
 
     }
@@ -122,4 +138,29 @@ function initMap(){
   ]
 
   console.log(markers);
+
+
+
+// function initialize() {
+//     var centerPosition = new google.maps.LatLng(38.713107, -90.42984);
+//     var options = {
+//         zoom: 6,
+//         center: centerPosition,
+//         mapTypeId: google.maps.MapTypeId.ROADMAP
+//     };
+//     map = new google.maps.Map($('#map')[0], options);
+
+//     google.maps.event.addListener(map, 'click', function (evt) {
+//         placeMarker(evt.latLng);
+//     });
+// }
+// google.maps.event.addDomListener(window, 'load', initialize);
+// // constructor fucntions
+
+
+
+
+
+
+
 
