@@ -3,7 +3,9 @@ function createMapElement(map) {
 
   const $mapBody = createMapBody(map);
   // Map outer container
-  $mapContainer = $("<div>").addClass("col-md-4");
+  $mapContainer = $("<div>")
+    .addClass("col-md-4")
+    .attr("data-mapID", id);
 
   $mapImg = $("<div>")
     .addClass("card mb-4 box-shadow")
@@ -28,13 +30,14 @@ function createMapActions(map) {
     .addClass("btn-group")
     .append($viewBtn);
 
-  const $viewMapLink = $("<a>")
-    .attr("href", `/map/${id}`)
-    .append($btnGroup);
+  const $viewMapLink = $("<p>")
+    // .attr("href", `/maps/${id}`)
+    .append($btnGroup)
+    .css("text-decoration", "none");
 
-  const $mapLikes = $("<small>")
+  const $mapLikes = $("<p>")
     .addClass("text-muted")
-    .html("&hearts; 1234");
+    .html(`<i title="Like map" class="fas fa-heart"></i> 1234`);
 
   const $mapActions = $("<div>")
     .addClass("d-flex justify-content-between align-items-center")
