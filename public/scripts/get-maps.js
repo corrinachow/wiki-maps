@@ -56,7 +56,7 @@ function createMapBody(map) {
     .text(user_id);
 
   const $mapTitle = $("<h3>")
-    .addClass("card-text py-2")
+    .addClass("card-text py-2").css('min-height','83px')
     .text(title);
 
   const $mapActions = createMapActions(map);

@@ -92,15 +92,13 @@ function createMapView(map) {
     .append($markerFormField);
   const $row = $("<div>")
     .addClass("row")
-    .append($mapCanvas, $formWrap);
+    .append($mapCanvas, $formWrap).css("margin-left", "0");
   return $viewMapContainer.append($mapHeading, $row);
 }
 
 $(window).on("load", function() {
-  console.log("loaded");
   $("button").on("click", function(e) {
     console.log("Button was clicked");
-    e.preventDefault();
 
     $mapID = $(this)
       .closest(".col-md-4")

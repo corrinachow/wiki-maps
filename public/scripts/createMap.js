@@ -1,8 +1,3 @@
-let map;
-let marker;
-
-$("#location-form").submit(geocode());
-
 function geocode(event) {
   event.preventDefault();
 
@@ -18,7 +13,6 @@ function geocode(event) {
     })
 
     .then(function(response) {
-
       //formatted Address
       let formattedAddress = response.data.results[0].formatted_address;
 
@@ -26,12 +20,7 @@ function geocode(event) {
 
       let lat = response.data.results[0].geometry.location.lat;
       let lng = response.data.results[0].geometry.location.lng;
-      console.log(lat);
-      console.log(lng);
 
-      //output to app
-      // console.log(formattedAddress);
-      // console.log(document.getElementById("map-location"));
       document.getElementById("map-location").textContent = formattedAddress;
       document.getElementById("map-title").textContent = title;
 
@@ -46,12 +35,7 @@ function geocode(event) {
     .catch(function(error) {
       console.log(error);
     });
-
 }
-
-// let locationForm = document.getElementById("location-form");
-console.log(locationForm);
-
 
 function initMap() {
   //map options
@@ -74,49 +58,57 @@ function initMap() {
   });
 }
 
-//add marker function
-function addMarker(props) {
-  console.log(props.coords);
-  if (marker) {
-    //if marker already was created change positon
-    marker.setPosition(props.coords);
-  } else {
-    //create a marker
-    marker = new google.maps.Marker({
-      position: props.coords,
-      map: map,
-      draggable: true
-    });
+$(() => {
+  console.log("ready");
+  let map = null;
+  let marker = null;
+
+  $("#location-form").submit(geocode());
+
+  console.log(locationForm);
+
+  //add marker function
+  function addMarker(props) {
+    console.log(props.coords);
+    if (marker) {
+      //if marker already was created change positon
+      marker.setPosition(props.coords);
+    } else {
+      //create a marker
+      marker = new google.maps.Marker({
+        position: props.coords,
+        map: map,
+        draggable: true
+      });
+    }
+
+    // check for eventlistner
+    if (props.desc) {
+      let infoWindow = new google.maps.InfoWindow({
+        content: "<h1>" + props.desc + "</h1>"
+      });
+
+      marker.addListener("click", function() {
+        infoWindow.open(map, marker);
+      });
+    }
+    markers.push(props);
   }
 
-  // check for eventlistner
-  if (props.desc) {
-    let infoWindow = new google.maps.InfoWindow({
-      content: "<h1>" + props.desc + "</h1>"
-    });
+  let markers = [
+    {
+      coords: { lat: 45.5017, lng: -73.5673 },
+      iconImage: "./coffee.png"
+    },
+    {
+      coords: { lat: 45.4861, lng: -73.5737 },
+      desc: "best app ever"
+    },
+    {
+      coords: { lat: 45.5236, lng: -73.5985 },
+      desc: "Hello World"
+    }
+  ];
 
-    marker.addListener("click", function() {
-      infoWindow.open(map, marker);
-    });
-  }
-  markers.push(props);
-}
-
-let markers = [
-  {
-    coords: { lat: 45.5017, lng: -73.5673 },
-    iconImage: "./coffee.png"
-  },
-  {
-    coords: { lat: 45.4861, lng: -73.5737 },
-    desc: "best app ever"
-  },
-  {
-    coords: { lat: 45.5236, lng: -73.5985 },
-    desc: "Hello World"
-  }
-];
-
-console.log(markers);
-
-
+  console.log(markers);
+});
