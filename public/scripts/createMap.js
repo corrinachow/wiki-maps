@@ -1,82 +1,36 @@
-let map
-let marker
 
-function geocode(input){
-
-  event.preventDefault();
-
-  console.log(input,'inside geocode')
-
-  axios.get( "https://maps.googleapis.com/maps/api/geocode/json",{
+$("#location-form").on("submit",function(e){
+  e.preventDefault()
+  let mapLocation = $('#location-input').val()
+  let mapTitle = $('#map-title-input').val()
+    axios.get( "https://maps.googleapis.com/maps/api/geocode/json",{
     params:{
-      address:input.location,
+      address:mapLocation,
       key:'AIzaSyCDMocOMHEh8J4yiu_I8QMurFjMgBfrldk'
-    }
-  })
-
-  .then(function(response){
-    // log full response
-    console.log(response)
-    //formatted Address
-    let formattedAddress = response.data.results[0].formatted_address;
-    //Geometry
+    }}).then(function(response){
 
     let lat = response.data.results[0].geometry.location.lat
     let lng = response.data.results[0].geometry.location.lng
 
+    const inputObj = {
+      location:mapLocation,
+      title:mapTitle,
+      coordinates:{'lat':lat,'lng':lng}
+    }
 
-
-     $.ajax({
+    $.ajax({
       type: 'POST',
       url: '/api/maps/new',
-      dataType: "json",
-      data: {'lat':lat,'lng':lng},
+      data:inputObj,
       success: function(data){
-        console.log('success')
+        console.log(data)
+        window.location.href = `/maps/${data[0].id}`;
       }
-    });
 
-    console.log(lat)
-    console.log(lng)
-
-    //output to app
-    console.log(formattedAddress)
-    console.log(document.getElementById('map-location'))
-    document.getElementById('map-location').textContent = formattedAddress;
-    document.getElementById('map-title').textContent = input.title;
-
-    if(($("#marker-input").css('display') === 'none')){
-          $("#marker-input").toggle(500,"linear");
-          $("#location-form").slideUp();
-        }
-
-    return map.setCenter(new google.maps.LatLng(lat,lng) );
-
-
-  })
-
-  .catch(function(error){
-    console.log(error)
-  })
-
-  console.log(geocode)
-}
-
-  $("#location-form").on("submit",function(event){
-
-  event.preventDefault();
-
-  $.ajax({
-      type: 'POST',
-      url: '/api/maps/new',
-      data: $( this ).serialize(),
-      success: function(data){
-        console.log('success')
-        geocode(data)
-      }
+    })
+  });
 
 })
-});
 
 function initMap(){
     //map options
@@ -90,7 +44,6 @@ function initMap(){
     //new map
 map = new google.maps.Map(document.getElementById('map-canvas'),options)
 
-console.log(document.getElementById('map-canvas'))
     //listen for click on map
 google.maps.event.addListener(map,'click',function(event){
 
@@ -153,6 +106,13 @@ google.maps.event.addListener(map,'click',function(event){
 //submit to database
 
 
+    // if(($("#marker-input").css('display') === 'none')){
+    //       $("#marker-input").toggle(500,"linear");
+    //       $("#location-form").slideUp();
+    //     }
+
+
+
 // changing icons ( optional )
 
 // $('input[type=radio][name="optionsRadios"]').change(function() {
@@ -160,6 +120,25 @@ google.maps.event.addListener(map,'click',function(event){
 //     marker.setIcon($("input[name=optionsRadios]:checked").next().attr(''))
 //   }
 // });
+
+// function geocode(){
+
+
+//     //formatted Address
+//     let formattedAddress = response.data.results[0].formatted_address;
+
+//     document.getElementById('map-location').textContent = formattedAddress;
+//     document.getElementById('map-title').textContent = input.title;
+
+//     // if(($("#marker-input").css('display') === 'none')){
+//     //       $("#marker-input").toggle(500,"linear");
+//     //       $("#location-form").slideUp();
+//     //     }
+
+//     return map.setCenter(new google.maps.LatLng(lat,lng) );
+
+
+//   })
 
 
 

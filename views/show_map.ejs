@@ -38,14 +38,14 @@
          <!-- find location -->
          <div class="col-md-4">
           <div class="container">
-            <form id ='location-form'>
+            <form id ='location-form' method='POST' action="/api/maps/new">
              <div class="form-group">
                <h2 id ='text-center'>Name of Map</h2>
-                <input type="text" class="form-control" id="map-title-input" placeholder="Best coffee ever!" name="map_title" action="api/map/new" method="POST">
+                <input type="text" class="form-control" id="map-title-input" placeholder="Best coffee ever!" name="map_title" action="/" method="POST">
               </div>
             <div id="enter-location">
               <h2 id ='text-center'>Location</h2>
-              <input type="text" id='location-input' class="form-control form-control-lg" placeholder="Toronto" name="location" action="api/map/new" method="POST">
+              <input type="text" id='location-input' class="form-control form-control-lg" placeholder="Toronto" name="location" action="/" method="POST">
               <br>
               <button type = 'submit' class='btn btn-primary btn-block'>Submit</button>
             </form>
@@ -57,16 +57,16 @@
             <!-- title -->
         <form id="marker-input" style="display:none">
            <div class="form-group">
-            <label for="marker-title">Title</label>
+            <label for="marker_title">Title</label>
           <input type="text" name="marker-title" class="form-control">
         </div>
 
           <!-- upload photos -->
               <div class="form-group">
                 <label for="exampleInputFile">Upload a photo</label>
-                <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp">
+                <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp" name="marker_image">
                 <small id="fileHelp" class="form-text text-muted"> Or upload an image URL</small>
-                <input type="text" class="form-control" id="marker-title" placeholder="image url: https://">
+                <input type="text" class="form-control" id="marker-title" placeholder="image url: https://" name="">
               </div>
                <!-- discription -->
               <div class="form-group">
