@@ -4,7 +4,7 @@
 
 .jumbotron {
   color: white;
-  height: 60vh;
+  height: 45vh;
   margin: 3.5rem 0;
   padding-top: calc(var(--jumbotron-padding-y) * 2);
   padding-bottom: 3.5rem;

@@ -79,7 +79,7 @@ function createMapView(map) {
     .addClass("col-md-8")
     .attr("id", "map-canvas");
 
-  const $viewMapContainer = $("<div>").addClass("container");
+  const $viewMapContainer = $("<div>").addClass("container map");
 
   // Map heading
   const $mapHeading = createMapHeading(title);
@@ -111,9 +111,14 @@ $(window).on("load", function() {
       url: "/api/maps/" + $mapID
     })
       .done(([map]) => {
-        console.log("Done");
-        console.log(createMapView(map));
-        $("section.jumbotron").replaceWith(createMapView(map));
+        let $mapView = createMapView(map).css("display", "none");
+
+        if ($("section.jumbotron").length > 0) {
+          $("section.jumbotron").replaceWith($mapView);
+        } else {
+          $("div.map").replaceWith($mapView);
+        }
+        $(".map").fadeIn();
       })
       .then(() => {
         $("#map-title").css("padding-top", "6rem");
