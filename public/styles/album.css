@@ -1,53 +1,62 @@
 :root {
- --jumbotron-padding-y: 6rem;
+  --jumbotron-padding-y: 6rem;
 }
 
 .jumbotron {
- padding-top: var(--jumbotron-padding-y);
- padding-bottom: 3rem;
- margin-bottom: 0;
- background-color: #fff;
+  color: white;
+  height: 60vh;
+  margin: 3.5rem 0;
+  padding-top: calc(var(--jumbotron-padding-y) * 2);
+  padding-bottom: 3.5rem;
+  margin-bottom: 0;
+  background: url(https://images.unsplash.com/photo-1461723447431-e229d9930353?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=1c924e7ecde424e6a003fe6682ee0e95&auto=format&fit=crop&w=1575&q=80);
+  background-size: cover;
+  background-position: center;
 }
+
 @media (min-width: 768px) {
- .jumbotron {
-   padding-top: calc(var(--jumbotron-padding-y) * 2);
-   padding-bottom: calc(3rem * 2);
- }
+  .jumbotron {
+    padding-top: calc(var(--jumbotron-padding-y) * 2);
+    padding-bottom: calc(3rem * 2);
+  }
 }
 
 .jumbotron p:last-child {
- margin-bottom: 0;
+  margin-bottom: 0;
 }
 
 .jumbotron-heading {
- font-weight: 300;
+  font-size: 5rem;
+  font-weight: 600;
 }
 
 .jumbotron .container {
- max-width: 40rem;
+  max-width: 40rem;
 }
 
 footer {
- padding-top: 3rem;
- padding-bottom: 3rem;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
 }
 
 footer p {
- margin-bottom: .25rem;
+  margin-bottom: .25rem;
 }
 
-.box-shadow { box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05); }
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
 
 #map-canvas {
-  height:500px;
-  width:750px;
+  height: 500px;
+  width: 640px;
 }
 
 #form-container {
-  margin:0 auto;
-  width:600px;
+  margin: 0 auto;
+  width: 600px;
   background-color: white;
-  border:1px solid #eee;
+  border: 1px solid #eee;
 }
 
 #form-contianer form {

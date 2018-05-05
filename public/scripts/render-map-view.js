@@ -11,7 +11,7 @@ function makeInput(type, name) {
 function createMapHeading(title) {
   $mapLocationSmall = $("<small>")
     .attr("id", "map-location")
-    .text("Temporary");
+    .text(" Temporary");
   return ($mapHeading = $("<h1>")
     .addClass("my-4")
     .attr("id", "map-title")
@@ -24,16 +24,17 @@ function createUploadForm(parentDiv) {
 
   $fileHelpSmall = $("<small>")
     .attr("id", "fileHelp")
-    .addClass("form-text text-muted");
+    .addClass("form-text text-muted")
+    .text("Or upload an image URL");
 
   // Change name for fromUrlInput
   $fromUrlInput = makeInput("text", "image-url");
 
-  return $photoUpload = parentDiv.append(
+  return parentDiv.append(
     $uploadLabel,
-    $uploadInput,
+    $uploadInput.addClass("form-control-file"),
     $fileHelpSmall,
-    $fromUrlInput
+    $fromUrlInput.addClass("form-control")
   );
 }
 
@@ -43,7 +44,7 @@ function createDescriptionForm(parentDiv) {
     .addClass("form-control")
     .attr({ id: "marker-desc", rows: "3" });
 
-  return
+  return parentDiv.append($markerDescLabel, $markerDescInput);
 }
 
 function createMarkerForm(map) {
@@ -54,22 +55,45 @@ function createMarkerForm(map) {
   // Create title input field
   $titleLabel = makeLabel("marker-title", "Title");
   $titleInput = makeInput("text", "marker-title");
-  $titleGroup = $formGroup.append($titleLabel, $titleInput);
+  $titleGroup = $("<div>")
+    .addClass("form-group")
+    .append($titleLabel, $titleInput.addClass("form-control"));
 
   $photoUpload = createUploadForm($formGroup);
+  $markerDesc = createDescriptionForm($formGroup);
 
+  $submitBtn = $("<button>")
+    .attr("type", "submit")
+    .addClass("btn btn-primary btn-block")
+    .text("Submit");
   $markerForm = $("<form>").attr("id", "marker-input");
+
+  return $markerForm.append($titleGroup, $photoUpload, $markerDesc, $submitBtn);
 }
 
 function createMapView(map) {
   console.log("In createMapView");
   const { title, coordinates, username } = map;
-  $viewMapContainer = $("<div>").addClass("container");
+
+  const $mapCanvas = $("<div>")
+    .addClass("col-md-8")
+    .attr("id", "map-canvas");
+
+  const $viewMapContainer = $("<div>").addClass("container");
 
   // Map heading
-  $mapHeading = createMapHeading(title);
+  const $mapHeading = createMapHeading(title);
 
-  console.log($mapHeading);
+  // Marker form field
+  const $markerFormField = createMarkerForm(map);
+
+  const $formWrap = $("<div>")
+    .addClass("col-md-4")
+    .append($markerFormField);
+  const $row = $("<div>")
+    .addClass("row")
+    .append($mapCanvas, $formWrap);
+  return $viewMapContainer.append($mapHeading, $row);
 }
 
 $(window).on("load", function() {
@@ -87,50 +111,9 @@ $(window).on("load", function() {
       url: "/api/maps/" + $mapID
     })
       .done(([map]) => {
-        console.log("fdsajklfdsjafkldsajfkdls");
-        // createMapView(map);
-        $("section.jumbotron").replaceWith(`<div class="container">
-        <div class="row">
-      <h1 class="my-4" id = "map-title">
-        <small id="map-location"></small>
-      </h1>
-
-      <div class="row">
-         <div class="col-md-8" id="map-canvas"></div>
-         <div class="col-md-4">
-          <div class="container">
-
-
-<h2>Add marker</h2>
-        <form id="marker-input">
-           <div class="form-group">
-            <label for="marker-title">Title</label>
-          <input type="text" name="marker-title" class="form-control">
-        </div>
-
-              <div class="form-group">
-                <label for="exampleInputFile">Upload a photo</label>
-                <input type="file" class="form-control-file" id="exampleInputFile" aria-describedby="fileHelp">
-                <small id="fileHelp" class="form-text text-muted"> Or upload an image URL</small>
-                <input type="text" class="form-control" id="marker-title" placeholder="image url: https://">
-              </div>
-              <div class="form-group">
-                <label for="exampleTextarea">Description</label>
-                <textarea class="form-control" id="exampleTextarea" rows="3"></textarea>
-              </div>
-              <button type="submit" class="btn btn-primary btn-block">Submit</button>
-            </form>
-            </div>
-          </div>
-          <div id="map-info" class="my-4">
-          <h3 class="d-inline my-2">by Username</h3>
-          <div class="d-inline float-right pt-2">
-            <span><i class="fas fa-heart"></i></span><span class="py-0 font-weight-bold text-uppercase text-muted">382937</span>
-          </div>
-        </div>
-        </div>
-        </div>
-      </div>`);
+        console.log("Done");
+        console.log(createMapView(map));
+        $("section.jumbotron").replaceWith(createMapView(map));
       })
       .then(() => {
         $("#map-title").css("padding-top", "6rem");
