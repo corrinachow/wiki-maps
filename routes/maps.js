@@ -11,8 +11,11 @@ function aggregateData(data) {
       map_id: dataItem.map_id,
       map_title: dataItem.map_title,
       map_coordinates: dataItem.map_coordinates,
-      map_creator: dataItem.username
+      map_creator: dataItem.username,
+      favourites: []
     };
+
+    console.log(mapData[dataItem.map_id].favourites);
 
     mapData.markers = mapData.markers || [];
 
@@ -32,11 +35,32 @@ function aggregateData(data) {
       fMarkerObj => fMarkerObj.marker_id === markerObj.marker_id
     );
 
+    const favObj = {
+      favourite_id: dataItem.favourite_id
+    };
+
+    const filterFavourite = mapData[dataItem.map_id].favourites.filter(
+      fFavObj => fFavObj.favourite_id === favObj.favourite_id
+    );
+
     if (filterMarker.length < 1) {
       mapData.markers.push(markerObj);
     }
+    if (filterFavourite.length < 1) {
+      mapData[dataItem.map_id].favourites.push(favObj);
+    }
   }
   return mapData;
+}
+
+function getMapFavourites(data) {
+  const result = [];
+  for (const obj of data) {
+    result.push({
+      favourites: obj.favourite_id
+    });
+  }
+  return result;
 }
 
 module.exports = knex => {
@@ -44,9 +68,14 @@ module.exports = knex => {
     res.send("new maps page");
   }),
     router.get("/", (req, res) => {
-      knex
-        .select("*")
-        .from("maps")
+      knex("maps")
+        .join("users", "users.id", "maps.user_id")
+        .select(
+          "username",
+          "maps.id as id",
+          "coordinates",
+          "title"
+        )
         .then(results => {
           res.json(results);
         });
@@ -55,6 +84,7 @@ module.exports = knex => {
       knex("maps")
         .join("users", "users.id", "maps.user_id")
         .join("markers", "maps.id", "markers.map_id")
+        .join("favourites", "favourites.map_id", "maps.id")
         .where("maps.id", req.params.id)
         .select(
           "username",
@@ -66,11 +96,20 @@ module.exports = knex => {
           "markers.description as marker_description",
           "markers.image_url as marker_img_url",
           "markers.coordinates as marker_coordinates",
-          "markers.map_id as map_id"
+          "markers.map_id as map_id",
+          "favourites.id as favourite_id"
         )
         .then(map => {
-          const parseData = aggregateData(map)
+          const parseData = aggregateData(map);
           res.json(parseData);
+        });
+    }),
+    router.get("/:id/favourites", (req, res) => {
+      knex("favourites")
+        .select("*")
+        .where("map_id", req.params.id)
+        .then(favourites => {
+          res.json(favourites);
         });
     });
 
