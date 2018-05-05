@@ -14,28 +14,32 @@
   <link rel="stylesheet" href="/styles/album.css" type="text/css" />
 
   <!--  External Javascript  -->
-
+  <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
   <!-- Internal Javascript -->
-  <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
-  <script type="text/javascript" src="/scripts/app.js"></script>
+  <script type="text/javascript" src="/scripts/create-map.js"></script>
 
 </head>
 
 <body style='padding-top: 6rem'>
   <main role="main">
     <% include ./partials/_header %>
+
+
+
+
     <!-- Page Content -->
     <div class="container">
       <!-- Map Heading -->
-      <h1 class="my-4" id = "map-title">Map title
+      <h1 class="my-4" id = "map-title">
+        <small id="map-location"></small>
       </h1>
-      <p id="map-location">Secondary Text</p>
+
       <!-- Map Row -->
       <div class="row">
         <!-- <div class="col-md-8"> -->
-         <div class="col-md-8"id="map-canvas"></div>
+         <div class="col-md-8" id="map-canvas"></div>
          <!-- find location -->
          <div class="col-md-4">
           <div class="container">
@@ -88,6 +92,14 @@
           </div>
         </div>
       </div>
+
+
+
+
+
+
+
+
     </main>
     <% include ./partials/_footer %>
     <script type="text/javascript" src="/scripts/createMap.js"></script>
@@ -98,29 +110,5 @@
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDwqMRP7XfcwpGlHAXUyhv5c1_1jFKs84c&callback=initMap">
     </script>
   </body>
-
   </html>
 
-
-              <!-- icons -->
-          <!--     <fieldset class="form-group">
-                <legend>Select an icon</legend>
-                <div class="form-check">
-                  <label class="form-check-label">
-                    <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios1" value="option1">
-                    <img src='https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'>
-                  </label>
-                </div>
-                <div class="form-check">
-                  <label class="form-check-label">
-                    <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios2" value="option2">
-                    <img src='https://developers.google.com/maps/documentation/javascript/examples/full/images/hiker.png'>
-                  </label>
-                </div>
-                <div class="form-check disabled">
-                  <label class="form-check-label">
-                    <input type="radio" class="form-check-input" name="optionsRadios" id="optionsRadios3" value="option3">
-                    <i class="fas fa-bicycle"></i>
-                  </label>
-                </div>
-              </fieldset> -->
