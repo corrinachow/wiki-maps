@@ -1,10 +1,10 @@
 $(() => {
+  for (i = 1; i < 7; i++) {
   $.ajax({
     method: "GET",
-    url: "/api/maps"
-  }).done(maps => {
-    for (i = 0; i < 9; i++) {
-      $(".row").append(createMapElement(maps[i]));
-    }
-  });
+    url: `/api/maps/${i}`
+  }).done((map) => {
+      $(".row").append(createMapElement(map));
+    })
+  };
 });

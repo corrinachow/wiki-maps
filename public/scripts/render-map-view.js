@@ -73,9 +73,9 @@ function createMarkerForm(map) {
 
 function createMapView(map) {
   console.log("In createMapView");
-  const { map_title } = map;
+  const { map_title, map_creator } = map;
 
-  console.log(map)
+  console.log(map);
   const $mapCanvas = $("<div>")
     .addClass("col-md-8")
     .attr("id", "map-canvas");
@@ -88,13 +88,23 @@ function createMapView(map) {
   // Marker form field
   const $markerFormField = createMarkerForm(map);
 
+  const $mapFooter = createMapsFooter(map_creator);
+
   const $formWrap = $("<div>")
     .addClass("col-md-4")
     .append($markerFormField);
   const $row = $("<div>")
     .addClass("row")
-    .append($mapCanvas, $formWrap).css("margin-left", "0");
+    .append($mapCanvas, $formWrap)
+    .css("margin-left", "0");
+
   return $viewMapContainer.append($mapHeading, $row);
+}
+
+function createMapsFooter(mapCreator) {
+  const $byUsername = $("<h3>")
+    .addClass("d-inline my-2")
+    .text(`by ${mapCreator}`);
 }
 
 $(window).on("load", function() {
@@ -109,8 +119,8 @@ $(window).on("load", function() {
       method: "GET",
       url: "/api/maps/" + $mapID
     })
-      .done((map) => {
-        console.log(map[$mapID])
+      .done(map => {
+        console.log(map[$mapID]);
         let $mapView = createMapView(map[$mapID]).css("display", "none");
 
         if ($("section.jumbotron").length > 0) {
