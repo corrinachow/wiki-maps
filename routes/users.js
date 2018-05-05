@@ -66,17 +66,19 @@ function aggregateData(data) {
 module.exports = knex => {
   router.get("/", (req, res) => {
     knex("users")
-      .join("contributions", "users.id", "contributions.user_id")
-      .join("maps", "contributions.user_id", "maps.user_id")
+      // .join("contributions", "users.id", "contributions.user_id")
+      // .join("maps", "contributions.user_id", "maps.user_id")
       .select("*")
       .then(results => {
         res.json(results);
       });
   }),
     router.get("/:id", (req, res) => {
+      console.log(req.params.id)
       knex("users")
         .join("maps", "users.id", "maps.user_id")
         .join("markers", "users.id", "markers.user_id")
+        .where("users.id",req.params.id )
         .select(
           "users.id as user_id",
           "email",
@@ -91,9 +93,9 @@ module.exports = knex => {
           "markers.coordinates as marker_coordinates",
           "markers.map_id as map_id"
         )
-        .where({ "users.id": req.params.id })
+
         .then(user => {
-          const parseData = aggregateData(user);
+          const parseData = aggregateData;(user);
           res.json(parseData);
         });
     }),
