@@ -7,7 +7,6 @@ function geocode(input){
 
   console.log(input,'inside geocode')
 
-
   axios.get( "https://maps.googleapis.com/maps/api/geocode/json",{
     params:{
       address:input.location,
@@ -18,17 +17,27 @@ function geocode(input){
   .then(function(response){
     // log full response
     console.log(response)
-
     //formatted Address
     let formattedAddress = response.data.results[0].formatted_address;
-
     //Geometry
 
     let lat = response.data.results[0].geometry.location.lat
     let lng = response.data.results[0].geometry.location.lng
+
+
+
+     $.ajax({
+      type: 'POST',
+      url: '/api/maps/new',
+      dataType: "json",
+      data: {'lat':lat,'lng':lng},
+      success: function(data){
+        console.log('success')
+      }
+    });
+
     console.log(lat)
     console.log(lng)
-
 
     //output to app
     console.log(formattedAddress)

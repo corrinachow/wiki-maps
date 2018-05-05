@@ -29,8 +29,12 @@ module.exports = knex => {
     })
 
 router.post('/new',(req, res) =>{
+
 let mapLocation = req.body.location
 let mapTitle = req.body.map_title
+let mapLng = req.body.lat
+let mapLat = req.body.lng
+
 const formInput = {
   location:mapLocation,
   title:mapTitle
@@ -38,14 +42,11 @@ const formInput = {
 
 res.send(formInput)
 
-})
+});
 
-  return router;
-};
+ return router;
 
-
-
-
+}
 
 
 
