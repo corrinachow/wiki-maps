@@ -53,16 +53,6 @@ function aggregateData(data) {
   return mapData;
 }
 
-function getMapFavourites(data) {
-  const result = [];
-  for (const obj of data) {
-    result.push({
-      favourites: obj.favourite_id
-    });
-  }
-  return result;
-}
-
 module.exports = knex => {
   router.get("/new", (req, res) => {
     res.send("new maps page");
