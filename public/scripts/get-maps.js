@@ -52,11 +52,12 @@ function createMapBody(map) {
   const $mapBody = $("<div>").addClass("card-body");
 
   const $mapCreator = $("<span>")
-    .addClass("font-weight-bold")
+    .addClass("font-weight-bold text-info")
     .text(user_id);
 
   const $mapTitle = $("<h3>")
-    .addClass("card-text py-2").css('min-height','83px')
+    .addClass("card-text py-2")
+    .css("min-height", "83px")
     .text(title);
 
   const $mapActions = createMapActions(map);

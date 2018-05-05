@@ -48,7 +48,7 @@ function createDescriptionForm(parentDiv) {
 }
 
 function createMarkerForm(map) {
-  const { coordinates, username } = map;
+  const { map_coordinates, map_creator } = map;
 
   $formGroup = $("<div>").addClass("form-group");
 
@@ -73,8 +73,9 @@ function createMarkerForm(map) {
 
 function createMapView(map) {
   console.log("In createMapView");
-  const { title, coordinates, username } = map;
+  const { map_title } = map;
 
+  console.log(map)
   const $mapCanvas = $("<div>")
     .addClass("col-md-8")
     .attr("id", "map-canvas");
@@ -82,7 +83,7 @@ function createMapView(map) {
   const $viewMapContainer = $("<div>").addClass("container map");
 
   // Map heading
-  const $mapHeading = createMapHeading(title);
+  const $mapHeading = createMapHeading(map_title);
 
   // Marker form field
   const $markerFormField = createMarkerForm(map);
@@ -108,8 +109,9 @@ $(window).on("load", function() {
       method: "GET",
       url: "/api/maps/" + $mapID
     })
-      .done(([map]) => {
-        let $mapView = createMapView(map).css("display", "none");
+      .done((map) => {
+        console.log(map[$mapID])
+        let $mapView = createMapView(map[$mapID]).css("display", "none");
 
         if ($("section.jumbotron").length > 0) {
           $("section.jumbotron").replaceWith($mapView);

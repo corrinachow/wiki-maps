@@ -1,3 +1,21 @@
+let map
+let marker
+
+let markers = [
+  {
+    coords: { lat: 45.5017, lng: -73.5673 },
+    iconImage: "./coffee.png"
+  },
+  {
+    coords: { lat: 45.4861, lng: -73.5737 },
+    desc: "best app ever"
+  },
+  {
+    coords: { lat: 45.5236, lng: -73.5985 },
+    desc: "Hello World"
+  }
+];
+
 function geocode(event) {
   event.preventDefault();
 
@@ -58,57 +76,36 @@ function initMap() {
   });
 }
 
-$(() => {
-  console.log("ready");
-  let map = null;
-  let marker = null;
-
-  $("#location-form").submit(geocode());
-
-  console.log(locationForm);
-
-  //add marker function
-  function addMarker(props) {
-    console.log(props.coords);
-    if (marker) {
-      //if marker already was created change positon
-      marker.setPosition(props.coords);
-    } else {
-      //create a marker
-      marker = new google.maps.Marker({
-        position: props.coords,
-        map: map,
-        draggable: true
-      });
-    }
-
-    // check for eventlistner
-    if (props.desc) {
-      let infoWindow = new google.maps.InfoWindow({
-        content: "<h1>" + props.desc + "</h1>"
-      });
-
-      marker.addListener("click", function() {
-        infoWindow.open(map, marker);
-      });
-    }
-    markers.push(props);
+function addMarker(props) {
+  console.log(props.coords);
+  if (marker) {
+    //if marker already was created change positon
+    marker.setPosition(props.coords);
+  } else {
+    //create a marker
+    marker = new google.maps.Marker({
+      position: props.coords,
+      map: map,
+      draggable: true
+    });
   }
 
-  let markers = [
-    {
-      coords: { lat: 45.5017, lng: -73.5673 },
-      iconImage: "./coffee.png"
-    },
-    {
-      coords: { lat: 45.4861, lng: -73.5737 },
-      desc: "best app ever"
-    },
-    {
-      coords: { lat: 45.5236, lng: -73.5985 },
-      desc: "Hello World"
-    }
-  ];
+  // check for eventlistner
+  if (props.desc) {
+    let infoWindow = new google.maps.InfoWindow({
+      content: "<h1>" + props.desc + "</h1>"
+    });
 
-  console.log(markers);
+    marker.addListener("click", function() {
+      infoWindow.open(map, marker);
+    });
+  }
+  markers.push(props);
+}
+
+$(() => {
+  console.log("ready");
+
+
+  $("#location-form").submit(geocode());
 });
