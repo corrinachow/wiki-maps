@@ -1,3 +1,4 @@
+let newMarker = null;
 let marker;
 let map;
 const latitude = [];
@@ -98,7 +99,10 @@ function initMap() {
       let markerImage = $("#marker-image").val();
       let markerDesc = $("#marker-desc").val();
 
+      const mapID = window.location.pathname.toString().substr(6);
+
       const markerObj = {
+        map_id: mapID,
         title: markerTitle,
         image_url: markerImage,
         description: markerDesc,
@@ -124,15 +128,16 @@ function initMap() {
 
 //add marker function
 function addMarker(props) {
+
   latitude.push(props.coords.lat());
   longitude.push(props.coords.lng());
 
-  if (marker) {
+  if (newMarker) {
     //if marker already was created change positon
-    marker.setPosition(props.coords);
+    newMarker.setPosition(props.coords);
   } else {
     //create a marker
-    marker = new google.maps.Marker({
+    newMarker = new google.maps.Marker({
       position: props.coords,
       map: map,
       draggable: true
