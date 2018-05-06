@@ -5,7 +5,7 @@
 .jumbotron {
   color: white;
   height: 45vh;
-  padding-top: var(--jumbotron-padding-y);
+  padding-top: calc(var(--jumbotron-padding-y) + 1.5rem);
   margin-bottom: 0;
   background: url(https://images.unsplash.com/photo-1461723447431-e229d9930353?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=1c924e7ecde424e6a003fe6682ee0e95&auto=format&fit=crop&w=1575&q=80);
   background-size: cover;
@@ -25,7 +25,7 @@
 }
 
 .jumbotron-heading {
-  font-size: 5rem;
+  font-size: 2rem;
   font-weight: 600;
 }
 
@@ -39,11 +39,11 @@ footer {
 }
 
 footer p {
-  margin-bottom: .25rem;
+  margin-bottom: 0.25rem;
 }
 
 .box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);
 }
 
 #map-canvas {
