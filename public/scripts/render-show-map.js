@@ -1,5 +1,5 @@
-$(() => {
-  const $mapID = window.location.pathname.toString().substr(6);
+$(window).on("load", function() {
+  const mapID = window.location.pathname.toString().substr(6);
   $.ajax({
     method: "GET",
     url: `/api/maps/${$mapID}`
