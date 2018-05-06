@@ -47,24 +47,15 @@ function initMap(){
              lng:-73.5673} // center of map
            }
 
-           console.log(options)
     //new map
     map = new google.maps.Map(document.getElementById('map-canvas'),options)
 
     //listen for click on map
     google.maps.event.addListener(map,'click',function(event){
 
-
-      // lat = event.latLng.lat();
-      // lng = event.latLng.lng();
-
       addMarker({coords:event.latLng})
 
-
-
       $("#marker-form").on("submit",function(e) {
-console.log(latitude)
-  console.log(longitude)
 
         console.log('inside marker form submission')
         e.preventDefault()
@@ -81,30 +72,24 @@ console.log(latitude)
           coordinates:{'lat':latitude[latitude.length -1],'lng':longitude[longitude.length -1]}
         }
 
-// console.log(markerObj)
+        $.ajax({
+          type: 'POST',
+          url:'/api/markers/new',
+          data:markerObj,
+          success: function(data){
+            console.log("~~~~~~~~~")
+            console.log(data,'data')
+            window.location.href = `/maps/${data.map_id}`;
+          }
 
-$.ajax({
-  type: 'POST',
-  url:'/api/markers/new',
-  data:markerObj,
-  success: function(data){
-    console.log(data)
-        // window.location.href = `/maps/${data[0].id}`;
-      }
-
-    })
-});
+        })
+      });
 
 
 
     })
 
   }
-
-
-
-
-
 
     //add marker function
     function addMarker(props){

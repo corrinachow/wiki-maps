@@ -21,11 +21,13 @@ console.log(req.body)
         map_id:47
       }
 
-      let markerTitle = req.body.marker_title
-      let markerImage = req.body.marker_image
-      let markerDesc = req.body.marker_description
+
+      let markerTitle = req.body.title
+      let markerImage = req.body.image_url
+      let markerDesc = req.body.description
 
       markerInput["title"] =  markerTitle
+
       markerInput["image_url"] = markerImage
       markerInput["description"] = markerDesc
       markerInput["coordinates"] = knex.raw(`point(${req.body.coordinates.lat},${req.body.coordinates.lng})`)
@@ -33,7 +35,8 @@ console.log(req.body)
       console.log(markerInput);
 
       knex('markers').insert(markerInput).returning('*').then(([r])=>{
-      res.redirect(r.map_id)
+      console.log(r,'returning')
+      res.send(r)
     })
 
     })
