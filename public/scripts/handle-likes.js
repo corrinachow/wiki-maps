@@ -1,19 +1,17 @@
 $(window).on("load", () => {
-  console.log('Handle likes loaded')
+  console.log("Handle likes loaded");
 
   $(".like").on("click", function() {
-
     const $mapID = window.location.pathname.toString().substr(6);
 
     $.post("/api/maps/" + $mapID, res => {
-      console.log(res)
-
+      console.log(res);
     });
 
     const currentLikes = Number(
       $(this)
-      .siblings(".likes")
-      .text()
+        .siblings(".likes")
+        .text()
     );
     // Use arrow function to select current element & scope $(this) in $.post
     if ($(this).css("color") === "rgb(255, 0, 0)") {
