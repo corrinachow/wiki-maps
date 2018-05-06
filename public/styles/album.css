@@ -61,3 +61,20 @@ footer p {
 #form-contianer form {
   margin: 0 auto;
 }
+
+.gm-style-iw {
+  display:flex;
+  justify-content: center;
+  width:150px;
+}
+
+.gm-style-iw p{
+  font-size:15px;
+  font-weight: 300;
+}
+
+.gm-style-iw img{
+  width:100px;
+  height:auto;
+  border-radius:5px;
+}

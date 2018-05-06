@@ -11,32 +11,32 @@ $("#location-form").on("submit", function(e) {
   let mapLocation = $("#location-input").val();
   let mapTitle = $("#map-title-input").val();
   axios
-    .get("https://maps.googleapis.com/maps/api/geocode/json", {
-      params: {
-        address: mapLocation,
-        key: "AIzaSyCDMocOMHEh8J4yiu_I8QMurFjMgBfrldk"
+  .get("https://maps.googleapis.com/maps/api/geocode/json", {
+    params: {
+      address: mapLocation,
+      key: "AIzaSyCDMocOMHEh8J4yiu_I8QMurFjMgBfrldk"
+    }
+  })
+  .then(function(response) {
+    let lat = response.data.results[0].geometry.location.lat;
+    let lng = response.data.results[0].geometry.location.lng;
+
+    const mapObj = {
+      location: mapLocation,
+      title: mapTitle,
+      coordinates: { lat: lat, lng: lng }
+    };
+
+    $.ajax({
+      type: "POST",
+      url: "/api/maps/new",
+      data: mapObj,
+      success: function(data) {
+        console.log(data);
+        window.location.href = `/maps/${data[0].id}`;
       }
-    })
-    .then(function(response) {
-      let lat = response.data.results[0].geometry.location.lat;
-      let lng = response.data.results[0].geometry.location.lng;
-
-      const mapObj = {
-        location: mapLocation,
-        title: mapTitle,
-        coordinates: { lat: lat, lng: lng }
-      };
-
-      $.ajax({
-        type: "POST",
-        url: "/api/maps/new",
-        data: mapObj,
-        success: function(data) {
-          console.log(data);
-          window.location.href = `/maps/${data[0].id}`;
-        }
-      });
     });
+  });
 });
 
 $(() => {
@@ -45,9 +45,9 @@ $(() => {
     type: "GET",
     url: `/api/maps/${mapID}`
   })
-    .done(function(map) {
-      const { x, y } = map[mapID].map_coordinates;
-      options = {
+  .done(function(map) {
+    const { x, y } = map[mapID].map_coordinates;
+    options = {
         zoom: 14, //max is 14
         center: {
           lat: x,
@@ -55,18 +55,20 @@ $(() => {
         } // center of map
       };
       for (const marker of map.markers) {
-        const { marker_title, marker_description, marker_coordinates } = marker;
+        const { marker_title, marker_description, marker_coordinates, marker_img_url} = marker;
         const markerArray = [];
 
+        console.log(map.markers)
+
         const { x, y } = marker_coordinates;
-        markerArray.push(marker_title, marker_description, x, y);
+        markerArray.push(marker_title, marker_description, x, y, marker_img_url);
         markers.push(markerArray);
       }
     })
-    .then(() => {
-      console.log(markers);
-      initMap();
-    });
+  .then(() => {
+    console.log("initMap should not be called")
+    initMap();
+  });
 });
 
 function initMap() {
@@ -75,17 +77,41 @@ function initMap() {
 
   //new map
   map = new google.maps.Map(document.getElementById("map-canvas"), options);
+  console.log(document.getElementById("map-canvas"))
 
-  for (const m of markers) {
-    console.log(m);
-    const position = new google.maps.LatLng(m[2], m[3]);
-    console.log(position);
-    marker = new google.maps.Marker({
-      position: position,
-      map: map,
-      title: m[0]
-    });
-  }
+  console.log(options,'options')
+    // Display multiple markers on a map
+    let infoWindow = new google.maps.InfoWindow(), marker, i;
+
+    let infoWindowContent = [];
+
+    for (let i = 0; i < markers.length; i++) {
+
+      const position = new google.maps.LatLng(markers[i][2], markers[i][3]);
+      console.log(position);
+
+      marker = new google.maps.Marker({
+        position: position,
+        map: map,
+        title:markers[i][0]
+      });
+
+      console.log(markers[i] ,'new markers')
+
+
+      infoWindowContent.push([`
+        <h4><strong>${markers[i][0]}</strong></h4>
+        <p>${markers[i][1]}</p>
+        <p><img src=${markers[i][4]}></p>`])
+
+      google.maps.event.addListener(marker, 'click', (function(marker, i) {
+        return function() {
+          infoWindow.setContent(infoWindowContent[i][0]);
+          infoWindow.open(map, marker);
+        }
+      })(marker, i));
+    }
+
   //listen for click on map
   google.maps.event.addListener(map, "click", function(event) {
     addMarker({ coords: event.latLng });
