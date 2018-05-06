@@ -30,6 +30,7 @@ function aggregateData(data) {
 
     userData.maps = userData.maps || [];
     userData.contributions = userData.contributions || [];
+    userData.favourites = userData.favourites || [];
 
     const filteredData = data.filter(
       dataObj => dataObj.map_id === dataItem.map_id
@@ -54,10 +55,23 @@ function aggregateData(data) {
       fContrObj => fContrObj.marker_id === contrObj.marker_id
     );
 
+    const favObj = {
+      map_id: dataItem.favourite_map
+
+    };
+
+    const filterFavourite = userData.favourites.filter(
+      fFavObj => fFavObj.map_id === favObj.map_id
+    );
+
     if (filterMap.length < 1) {
       userData.maps.push(mapObj);
-    } else if (filterContr.length < 1) {
+    }
+    if (filterContr.length < 1) {
       userData.contributions.push(contrObj);
+    }
+    if (filterFavourite.length < 1) {
+      userData.favourites.push(favObj);
     }
   }
   return userData;
@@ -74,11 +88,11 @@ module.exports = knex => {
       });
   }),
     router.get("/:id", (req, res) => {
-      console.log(req.params.id)
       knex("users")
         .join("maps", "users.id", "maps.user_id")
         .join("markers", "users.id", "markers.user_id")
-        .where("users.id",req.params.id )
+        .join("favourites", "users.id", "favourites.user_id")
+        .where("users.id", req.params.id)
         .select(
           "users.id as user_id",
           "email",
@@ -91,28 +105,28 @@ module.exports = knex => {
           "markers.description as marker_description",
           "markers.image_url as marker_img_url",
           "markers.coordinates as marker_coordinates",
-          "markers.map_id as map_id"
+          "markers.map_id as map_id",
+          "favourites.map_id as favourite_map"
         )
-
         .then(user => {
-          const parseData = aggregateData;(user);
+          const parseData = aggregateData(user);
           res.json(parseData);
         });
-    }),
-    router.get("/:id/favourites", (req, res) => {
-      knex("favourites")
-        .join("users", "users.id", "favourites.user_id")
-        .join("maps", "maps.id", "favourites.map_id")
-        .select(
-          "maps.id as maps_id",
-          "maps.title as map_title",
-          "maps.coordinates as map_coordinates"
-        )
-        .where({ "users.id": req.params.id })
-        .then(favourites => {
-          res.json(favourites);
-        });
     });
+  router.get("/:id/favourites", (req, res) => {
+    knex("favourites")
+      .join("users", "users.id", "favourites.user_id")
+      .join("maps", "maps.id", "favourites.map_id")
+      .select(
+        "maps.id as maps_id",
+        "maps.title as map_title",
+        "maps.coordinates as map_coordinates"
+      )
+      .where({ "users.id": req.params.id })
+      .then(favourites => {
+        res.json(favourites);
+      });
+  });
 
   return router;
 };

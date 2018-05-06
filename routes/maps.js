@@ -11,11 +11,9 @@ function aggregateData(data) {
       map_id: dataItem.map_id,
       map_title: dataItem.map_title,
       map_coordinates: dataItem.map_coordinates,
-      map_creator: dataItem.username,
+      map_creator: { user_id: dataItem.user_id, username: dataItem.username },
       favourites: []
     };
-
-    console.log(mapData[dataItem.map_id].favourites);
 
     mapData.markers = mapData.markers || [];
 
@@ -60,12 +58,7 @@ module.exports = knex => {
     router.get("/", (req, res) => {
       knex("maps")
         .join("users", "users.id", "maps.user_id")
-        .select(
-          "username",
-          "maps.id as id",
-          "coordinates",
-          "title"
-        )
+        .select("username", "maps.id as id", "coordinates", "title")
         .then(results => {
           res.json(results);
         });
@@ -78,6 +71,7 @@ module.exports = knex => {
         .where("maps.id", req.params.id)
         .select(
           "username",
+          "users.id as user_id",
           "maps.id as map_id",
           "maps.title as map_title",
           "maps.coordinates as map_coordinates",
