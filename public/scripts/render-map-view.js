@@ -73,7 +73,7 @@ function createMarkerForm(map) {
     .text("Submit");
   $markerForm = $("<form>").attr({
     id: "marker-form",
-    method: "POST",
+    method: "POST"
     // action: "/api/markers/new"
   });
 
@@ -81,7 +81,6 @@ function createMarkerForm(map) {
 }
 
 function createMapView(map) {
-  console.log("In createMapView");
   const { favourites } = map;
 
   const $mapCanvas = $("<div>")
@@ -110,7 +109,6 @@ function createMapView(map) {
 }
 
 function createMapsFooter(map) {
-  console.log(map);
   const { map_creator, favourites } = map;
 
   const $byUsername = $("<h3>")
@@ -129,20 +127,19 @@ function createMapsFooter(map) {
 function createMapLikes(map) {
   const { favourites } = map;
   const $likeBtn = $("<span>")
-    .addClass("like-btn")
+    .addClass("like")
     .html(`<i title="Like map" class="fas fa-heart"></i>`);
 
   const $likeAmt = $("<span>")
-    .addClass("py-0 font-weight-bold text-uppercase text-muted")
-    .text(` ${favourites.length}`);
+    .addClass("py-0 font-weight-bold text-uppercase text-muted likes ml-2")
+    .text(`${favourites.length}`);
 
   const $mapLikes = $("<div>")
-    .addClass("d-inline float-right pt-2")
+    .addClass("d-inline pt-2 ml-5")
     .append($likeBtn, $likeAmt);
 
   return $mapLikes;
 }
-
 // $(window).on("load", function() {
 //   $("button").on("click", function(e) {
 //     console.log("Button was clicked");

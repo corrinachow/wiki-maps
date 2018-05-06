@@ -32,7 +32,6 @@ $("#location-form").on("submit", function(e) {
         url: "/api/maps/new",
         data: mapObj,
         success: function(data) {
-          console.log(data);
           window.location.href = `/maps/${data[0].id}`;
         }
       });
@@ -64,22 +63,18 @@ $(window).on("load", function() {
       }
     })
     .then(() => {
-      console.log(markers);
       initMap();
     });
 });
 
 function initMap() {
   //map options
-  console.log("in initMap");
 
   //new map
   map = new google.maps.Map(document.getElementById("map-canvas"), options);
 
   for (const m of markers) {
-    console.log(m);
     const position = new google.maps.LatLng(m[2], m[3]);
-    console.log(position);
     marker = new google.maps.Marker({
       position: position,
       map: map,
@@ -91,7 +86,6 @@ function initMap() {
     addMarker({ coords: event.latLng });
 
     $("#marker-form").on("submit", function(e) {
-      console.log("inside marker form submission");
       e.preventDefault();
 
       console.log(e.target);
@@ -128,7 +122,6 @@ function initMap() {
 
 //add marker function
 function addMarker(props) {
-
   latitude.push(props.coords.lat());
   longitude.push(props.coords.lng());
 

@@ -98,8 +98,7 @@ module.exports = knex => {
         });
     }),
     router.post("/new", (req, res) => {
-
-      // Fix user_id to grab user_id from cookie...
+      // FIXME: user_id to grab user_id from cookie...
       const mapInput = {
         user_id: 1
       };
@@ -120,6 +119,40 @@ module.exports = knex => {
           console.log(r.id);
 
           res.redirect(r.id);
+        });
+    }),
+    router.post("/:id", (req, res) => {
+      //FIXME: use user_id from cookie lmfao
+
+      const favouriteObj = {
+        user_id: 1,
+        map_id: req.params.id
+      };
+
+      knex("favourites")
+        .select("*")
+        .where({ user_id: favouriteObj.user_id, map_id: req.params.id })
+        .then(results => {
+          // If the user has not liked the post, add to DB
+          if (results.length < 1) {
+            knex("favourites")
+              .insert(favouriteObj)
+              .returning("*")
+              .then(favourite =>
+                console.log("Successfully added like", favourite)
+              );
+            // The user is disliking the post, remove from DB
+          } else {
+            knex("favourites")
+              .where(favouriteObj)
+              .del()
+              .then(() => {
+                console.log("Successfully deleted like");
+              });
+          }
+        })
+        .catch(err => {
+          console.log(err);
         });
     });
 
