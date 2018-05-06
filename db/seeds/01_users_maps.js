@@ -26,7 +26,8 @@ exports.seed = function(knex, Promise) {
             maps.push({
               title: faker.lorem.words(2),
               coordinates: knex.raw(`point(${lat}, ${lon})`),
-              user_id: faker.random.arrayElement(userIds)
+              user_id: faker.random.arrayElement(userIds),
+              location: faker.address.city()
             });
           }
           return knex("maps").insert(maps);
