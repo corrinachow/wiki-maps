@@ -4,8 +4,7 @@ $(window).on("load", () => {
     console.log($userID)
     if ($userID) {
       console.log("Like clicked");
-      const $mapID = window.location.pathname.toString().substr(6);
-
+      const $mapID = window.location.pathname.toString().substr(6)
       $.ajax({
         type: "POST",
         url: `/api/maps/${$mapID}`,
