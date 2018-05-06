@@ -73,7 +73,7 @@ function createMarkerForm(map) {
 
 function createMapView(map) {
   console.log("In createMapView");
-  const { map_title, map_creator } = map;
+  const { map_title, favourites } = map;
 
   console.log(map);
   const $mapCanvas = $("<div>")
@@ -88,23 +88,50 @@ function createMapView(map) {
   // Marker form field
   const $markerFormField = createMarkerForm(map);
 
-  const $mapFooter = createMapsFooter(map_creator);
+  const $mapFooter = createMapsFooter(map);
 
   const $formWrap = $("<div>")
     .addClass("col-md-4")
     .append($markerFormField);
   const $row = $("<div>")
     .addClass("row")
-    .append($mapCanvas, $formWrap)
+    .append($mapCanvas, $formWrap, $mapFooter)
     .css("margin-left", "0");
 
   return $viewMapContainer.append($mapHeading, $row);
 }
 
-function createMapsFooter(mapCreator) {
+function createMapsFooter(map) {
+  const { map_creator, favourites } = map;
+
   const $byUsername = $("<h3>")
     .addClass("d-inline my-2")
-    .text(`by ${mapCreator}`);
+    .text(`by ${map_creator}`);
+
+  const $mapLikes = createMapLikes(map);
+
+  $mapInfo = $("<div>")
+    .attr("id", "map-info")
+    .addClass("my-4");
+
+  return $mapInfo.append($byUsername, $mapLikes);
+}
+
+function createMapLikes(map) {
+  const { favourites } = map;
+  const $likeBtn = $("<span>")
+    .addClass("like-btn")
+    .html(`<i title="Like map" class="fas fa-heart"></i>`);
+
+  const $likeAmt = $("<span>")
+    .addClass("py-0 font-weight-bold text-uppercase text-muted")
+    .text(` ${favourites.length}`)
+
+  const $mapLikes = $("<div>")
+    .addClass("d-inline float-right pt-2")
+    .append($likeBtn, $likeAmt).css({ position: "absolute", left: "62%" });
+
+  return $mapLikes;
 }
 
 $(window).on("load", function() {
@@ -114,13 +141,12 @@ $(window).on("load", function() {
     $mapID = $(this)
       .closest(".col-md-4")
       .data("mapid");
-    console.log($mapID);
+
     $.ajax({
       method: "GET",
       url: "/api/maps/" + $mapID
     })
       .done(map => {
-        console.log(map[$mapID]);
         let $mapView = createMapView(map[$mapID]).css("display", "none");
 
         if ($("section.jumbotron").length > 0) {
