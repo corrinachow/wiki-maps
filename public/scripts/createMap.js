@@ -18,28 +18,27 @@ $("#location-form").on("submit", function(e) {
     }
   })
   .then(function(response) {
-    let lat = response.data.results[0].geometry.location.lat;
-    let lng = response.data.results[0].geometry.location.lng;
+      let lat = response.data.results[0].geometry.location.lat;
+      let lng = response.data.results[0].geometry.location.lng;
 
-    const mapObj = {
-      location: mapLocation,
-      title: mapTitle,
-      coordinates: { lat: lat, lng: lng }
-    };
+      const mapObj = {
+        location: mapLocation,
+        title: mapTitle,
+        coordinates: { lat: lat, lng: lng }
+      };
 
-    $.ajax({
-      type: "POST",
-      url: "/api/maps/new",
-      data: mapObj,
-      success: function(data) {
-        console.log(data);
-        window.location.href = `/maps/${data[0].id}`;
-      }
-    });
+      $.ajax({
+        type: "POST",
+        url: "/api/maps/new",
+        data: mapObj,
+        success: function(data) {
+          window.location.href = `/maps/${data[0].id}`;
+        }
+      });
   });
 });
 
-$(() => {
+$(window).on("load", function() {
   const mapID = window.location.pathname.toString().substr(6);
   $.ajax({
     type: "GET",
@@ -65,15 +64,13 @@ $(() => {
         markers.push(markerArray);
       }
     })
-  .then(() => {
-    console.log("initMap should not be called")
-    initMap();
-  });
+    .then(() => {
+      initMap();
+    });
 });
 
 function initMap() {
   //map options
-  console.log("in initMap");
 
   //new map
   map = new google.maps.Map(document.getElementById("map-canvas"), options);
@@ -117,7 +114,6 @@ function initMap() {
     addMarker({ coords: event.latLng });
 
     $("#marker-form").on("submit", function(e) {
-      console.log("inside marker form submission");
       e.preventDefault();
 
       console.log(e.target);
@@ -154,7 +150,6 @@ function initMap() {
 
 //add marker function
 function addMarker(props) {
-
   latitude.push(props.coords.lat());
   longitude.push(props.coords.lng());
 

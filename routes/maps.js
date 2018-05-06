@@ -97,28 +97,64 @@ module.exports = knex => {
           res.json(favourites);
         });
     }),
-    router.post('/new',(req, res) =>{
+    router.post("/new", (req, res) => {
+      // FIXME: user_id to grab user_id from cookie...
+      const mapInput = {
+        user_id: 1
+      };
 
-    const mapInput = {
-      user_id:1
-    }
+      const mapLocation = req.body.location;
+      const mapTitle = req.body.title;
 
-    console.log(req.body)
+      mapInput["location"] = mapLocation;
+      mapInput["title"] = mapTitle;
+      mapInput["coordinates"] = knex.raw(
+        `point(${req.body.coordinates.lat},${req.body.coordinates.lng})`
+      );
 
-    let mapLocation = req.body.location
-    let mapTitle = req.body.title
+      knex("maps")
+        .insert(mapInput)
+        .returning("*")
+        .then(([r]) => {
+          console.log(r.id);
 
-    mapInput["location"] = mapLocation
-    mapInput["title"] = mapTitle
-    mapInput["coordinates"] = knex.raw(`point(${req.body.coordinates.lat},${req.body.coordinates.lng})`)
+          res.redirect(r.id);
+        });
+    }),
+    router.post("/:id", (req, res) => {
+      //FIXME: use user_id from cookie lmfao
 
+      const favouriteObj = {
+        user_id: 1,
+        map_id: req.params.id
+      };
 
-    knex('maps').insert(mapInput).returning('*').then(([r])=>{
-      console.log(r.id);
-
-      res.redirect(r.id)
-    })
-  });
+      knex("favourites")
+        .select("*")
+        .where({ user_id: favouriteObj.user_id, map_id: req.params.id })
+        .then(results => {
+          // If the user has not liked the post, add to DB
+          if (results.length < 1) {
+            knex("favourites")
+              .insert(favouriteObj)
+              .returning("*")
+              .then(favourite =>
+                console.log("Successfully added like", favourite)
+              );
+            // The user is disliking the post, remove from DB
+          } else {
+            knex("favourites")
+              .where(favouriteObj)
+              .del()
+              .then(() => {
+                console.log("Successfully deleted like");
+              });
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    });
 
   return router;
 };
