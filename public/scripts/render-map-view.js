@@ -144,32 +144,32 @@ function createMapLikes(map) {
 
   return $mapLikes;
 }
-// $(window).on("load", function() {
-//   $("button").on("click", function(e) {
-//     console.log("Button was clicked");
+$(window).on("load", function() {
+  $("button").on("click", function(e) {
+    console.log("Button was clicked");
 
-//     $mapID = $(this)
-//       .closest(".col-md-4")
-//       .data("mapid");
+    $mapID = $(this)
+      .closest(".col-md-4")
+      .data("mapid");
 
-//     $.ajax({
-//       method: "GET",
-//       url: "/api/maps/" + $mapID
-//     })
-//       .done(map => {
-//         let $mapView = createMapView(map[$mapID]).css("display", "none");
+    $.ajax({
+      method: "GET",
+      url: "/api/maps/" + $mapID
+    })
+      .done(map => {
+        let $mapView = createMapView(map[$mapID]).css("display", "none");
 
-//         if ($("section.jumbotron").length > 0) {
-//           $("section.jumbotron").replaceWith($mapView);
-//         } else {
-//           $("div.map").replaceWith($mapView);
-//         }
-//         $(".map").fadeIn();
-//       })
-//       .then(() => {
-//         $("#map-title").css("padding-top", "6rem");
-//         initMap();
-//         $("html, body").animate({ scrollTop: 0 }, "slow");
-//       });
-//   });
+        if ($("section.jumbotron").length > 0) {
+          $("section.jumbotron").replaceWith($mapView);
+        } else {
+          $("div.map").replaceWith($mapView);
+        }
+        $(".map").fadeIn();
+      })
+      .then(() => {
+        $("#map-title").css("padding-top", "6rem");
+        initMap();
+        $("html, body").animate({ scrollTop: 0 }, "slow");
+      });
+  });
 // });
