@@ -1,7 +1,9 @@
-function generateRandomImg(){
-  const randomNumber = Math.random().toString().substr(3,6);
-  const collectionArr = [289662,1625880,1886495, 474683]
-  return `https://source.unsplash.com/collection/474683/288x255/?sig=${randomNumber}`
+function generateRandomImg() {
+  const randomNumber = Math.random()
+    .toString()
+    .substr(3, 6);
+  const collectionArr = [289662, 1625880, 1886495, 474683];
+  return `https://source.unsplash.com/collection/474683/288x255/?sig=${randomNumber}`;
 }
 
 function createMapElement(map) {
@@ -9,7 +11,8 @@ function createMapElement(map) {
   [id] = Object.keys(map);
   const { map_id, map_coordinates, map_creator } = map[id];
 
-  const $randomImageUrl = map.markers[Math.floor(Math.random() * map.markers.length)].marker_img_url;
+  const $randomImageUrl =
+    map.markers[Math.floor(Math.random() * map.markers.length)].marker_img_url;
   const $mapBody = createMapBody(map);
   // Map outer container
   $mapContainer = $("<div>")
@@ -44,9 +47,17 @@ function createMapActions(map) {
     .append($btnGroup)
     .css("text-decoration", "none");
 
-  const $mapLikes = $("<p>")
+  const $likeBtn = $("<i>")
+    .attr("title", "Like post")
+    .addClass("fas fa-heart like mx-2");
+
+  const $likeCounter = $("<span>")
+    .addClass("likes")
+    .text(favourites.length);
+
+  const $mapLikes = $("<span>")
     .addClass("text-muted")
-    .html(`<i title="Like map" class="fas fa-heart"></i> ${favourites.length}`);
+    .append($likeBtn, $likeCounter);
 
   const $mapActions = $("<div>")
     .addClass("d-flex justify-content-between align-items-center")

@@ -1,10 +1,18 @@
-$(window).on("load", () => {
+$(window).on("load", function() {
+  console.log("loaded");
   $("html").on("click", ".like", function() {
     const $userID = Cookies.get("user_id");
-    console.log($userID)
+
     if ($userID) {
-      console.log("Like clicked");
-      const $mapID = window.location.pathname.toString().substr(6)
+      console.log($(this).parentsUntil("col-md-4"));
+      const $mapID = $(this)
+        .parent()
+        .parent()
+        .parent()
+        .parent()
+        .parent()
+        .data().mapid;
+
       $.ajax({
         type: "POST",
         url: `/api/maps/${$mapID}`,
@@ -32,7 +40,7 @@ $(window).on("load", () => {
           .text(currentLikes + 1);
       }
     } else {
-      console.log("Not logged in")
+      console.log("Not logged in");
     }
   });
 });
