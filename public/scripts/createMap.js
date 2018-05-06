@@ -55,11 +55,13 @@ $(() => {
         } // center of map
       };
       for (const marker of map.markers) {
-        const { marker_title, marker_description, marker_coordinates } = marker;
+        const { marker_title, marker_description, marker_coordinates, marker_img_url} = marker;
         const markerArray = [];
 
+        console.log(map.markers)
+
         const { x, y } = marker_coordinates;
-        markerArray.push(marker_title, marker_description, x, y);
+        markerArray.push(marker_title, marker_description, x, y, marker_img_url);
         markers.push(markerArray);
       }
     })
@@ -83,109 +85,32 @@ function initMap() {
 
     let infoWindowContent = [];
 
-  for (let i = 0; i < markers.length; i++) {
+    for (let i = 0; i < markers.length; i++) {
 
-    const position = new google.maps.LatLng(markers[i][2], markers[i][3]);
-    console.log(position);
+      const position = new google.maps.LatLng(markers[i][2], markers[i][3]);
+      console.log(position);
 
-    marker = new google.maps.Marker({
-      position: position,
-      map: map,
-      title:markers[i][0]
-    });
+      marker = new google.maps.Marker({
+        position: position,
+        map: map,
+        title:markers[i][0]
+      });
 
-
-infoWindowContent.push([`Title:${markers[i][0]}`])
-
- google.maps.event.addListener(marker, 'click', (function(marker, i) {
-            return function() {
-                infoWindow.setContent(infoWindowContent[i][0]);
-                infoWindow.open(map, marker);
-            }
-        })(marker, i));
-}
+      console.log(markers[i] ,'new markers')
 
 
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      infoWindowContent.push([`
+        <h4><strong>${markers[i][0]}</strong></h4>
+        <p>${markers[i][1]}</p>
+        <p><img src=${markers[i][4]}></p>`])
 
-
-
-
-
-// function initialize() {
-//     var map;
-
-//     // Multiple Markers
-//     var markers = [
-//         ['London Eye, London', 51.503454,-0.119562],
-//         ['Palace of Westminster, London', 51.499633,-0.124755]
-//     ];
-
-//     // Info Window Content
-//     var infoWindowContent = [
-//         ['<div class="info_content">' +
-//         '<h3>London Eye</h3>' +
-//         '<p>The London Eye is a giant Ferris wheel situated on the banks of the River Thames. The entire structure is 135 metres (443 ft) tall and the wheel has a diameter of 120 metres (394 ft).</p>' +        '</div>'],
-//         ['<div class="info_content">' +
-//         '<h3>Palace of Westminster</h3>' +
-//         '<p>The Palace of Westminster is the meeting place of the House of Commons and the House of Lords, the two houses of the Parliament of the United Kingdom. Commonly known as the Houses of Parliament after its tenants.</p>' +
-//         '</div>']
-//     ];
-
-//     // Display multiple markers on a map
-//     var infoWindow = new google.maps.InfoWindow(), marker, i;
-
-//     // Loop through our array of markers & place each one on the map
-//     for( i = 0; i < markers.length; i++ ) {
-//         var position = new google.maps.LatLng(markers[i][1], markers[i][2]);
-//         bounds.extend(position);
-//         marker = new google.maps.Marker({
-//             position: position,
-//             map: map,
-//             title: markers[i][0]
-//         });
-
-//         // Allow each marker to have an info window
-
-
-//         // Automatically center the map fitting all markers on the screen
-//         map.fitBounds(bounds);
-//     }
-
-//     // Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
-//     var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function(event) {
-//         this.setZoom(14);
-//         google.maps.event.removeListener(boundsListener);
-//     });
-
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-
-
-
-
+      google.maps.event.addListener(marker, 'click', (function(marker, i) {
+        return function() {
+          infoWindow.setContent(infoWindowContent[i][0]);
+          infoWindow.open(map, marker);
+        }
+      })(marker, i));
+    }
 
   //listen for click on map
   google.maps.event.addListener(map, "click", function(event) {
