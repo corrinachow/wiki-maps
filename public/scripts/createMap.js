@@ -127,25 +127,3 @@ function initMap(){
     // }
     // markers.push(props);
   }
-
-
-
-
-  let markers = [
-  {
-    coords:{lat:45.5017,lng:-73.5673},
-    iconImage:'./coffee.png'
-  },
-  {
-    coords:{lat:45.4861,lng:-73.5737},
-    desc:'best app ever'
-  },
-  {
-    coords:{lat:45.5236,lng:-73.5985},
-    desc:'Hello World'
-  }
-  ]
-
-  // console.log(markers);
-
-//submit to database

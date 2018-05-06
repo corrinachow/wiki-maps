@@ -1,5 +1,5 @@
 const faker = require("faker");
-let favourites = 10;
+let favourites = 50;
 
 exports.seed = function(knex, Promise) {
   return Promise.resolve(["users", "maps"])
