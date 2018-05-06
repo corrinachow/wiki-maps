@@ -1,36 +1,43 @@
 
+let marker
+let map
+const latitude =[]
+const longitude =[]
+
+
+
 $("#location-form").on("submit",function(e){
   e.preventDefault()
   let mapLocation = $('#location-input').val()
   let mapTitle = $('#map-title-input').val()
-    axios.get( "https://maps.googleapis.com/maps/api/geocode/json",{
+  axios.get( "https://maps.googleapis.com/maps/api/geocode/json",{
     params:{
       address:mapLocation,
       key:'AIzaSyCDMocOMHEh8J4yiu_I8QMurFjMgBfrldk'
     }}).then(function(response){
 
-    let lat = response.data.results[0].geometry.location.lat
-    let lng = response.data.results[0].geometry.location.lng
+      let lat = response.data.results[0].geometry.location.lat
+      let lng = response.data.results[0].geometry.location.lng
 
-    const inputObj = {
-      location:mapLocation,
-      title:mapTitle,
-      coordinates:{'lat':lat,'lng':lng}
-    }
-
-    $.ajax({
-      type: 'POST',
-      url: '/api/maps/new',
-      data:inputObj,
-      success: function(data){
-        console.log(data)
-        window.location.href = `/maps/${data[0].id}`;
+      const mapObj = {
+        location:mapLocation,
+        title:mapTitle,
+        coordinates:{'lat':lat,'lng':lng}
       }
 
-    })
-  });
+      $.ajax({
+        type: 'POST',
+        url: '/api/maps/new',
+        data:mapObj,
+        success: function(data){
+          console.log(data)
+          window.location.href = `/maps/${data[0].id}`;
+        }
 
-})
+      })
+    });
+
+  })
 
 function initMap(){
     //map options
@@ -42,47 +49,102 @@ function initMap(){
 
            console.log(options)
     //new map
-map = new google.maps.Map(document.getElementById('map-canvas'),options)
+    map = new google.maps.Map(document.getElementById('map-canvas'),options)
 
     //listen for click on map
-google.maps.event.addListener(map,'click',function(event){
+    google.maps.event.addListener(map,'click',function(event){
 
-    addMarker({coords:event.latLng})
+
+      // lat = event.latLng.lat();
+      // lng = event.latLng.lng();
+
+      addMarker({coords:event.latLng})
+
+
+
+      $("#marker-form").on("submit",function(e) {
+console.log(latitude)
+  console.log(longitude)
+
+        console.log('inside marker form submission')
+        e.preventDefault()
+
+        console.log(e.target)
+        let markerTitle = $('#marker-title').val()
+        let markerImage = $('#marker-image').val()
+        let markerDesc = $('#marker-desc').val()
+
+        const markerObj = {
+          title:markerTitle,
+          image_url:markerImage,
+          description:markerDesc,
+          coordinates:{'lat':latitude[latitude.length -1],'lng':longitude[longitude.length -1]}
+        }
+
+// console.log(markerObj)
+
+$.ajax({
+  type: 'POST',
+  url:'/api/markers/new',
+  data:markerObj,
+  success: function(data){
+    console.log(data)
+        // window.location.href = `/maps/${data[0].id}`;
+      }
+
+    })
 });
 
-};
+
+
+    })
+
+  }
+
+
+
 
 
 
     //add marker function
     function addMarker(props){
-      console.log(props.coords)
+      latitude.push(props.coords.lat())
+      longitude.push(props.coords.lng())
+
+
       if (marker) {
         //if marker already was created change positon
         marker.setPosition(props.coords);
 
-    } else {
+      } else {
         //create a marker
         marker = new google.maps.Marker({
-            position:props.coords,
-            map: map,
-            draggable: true
+          position:props.coords,
+          map: map,
+          draggable: true
         });
-    }
+
+
+      }
+
+    // console.log(marker.position.lat);
 
     // check for eventlistner
-    if(props.desc){
-      let infoWindow = new google.maps.InfoWindow({
-       content:'<h1>'+ props.desc + '</h1>'})
+    // if(props.desc){
+    //   let infoWindow = new google.maps.InfoWindow({
+    //    content:'<h1>'+ props.desc + '</h1>'})
 
-      marker.addListener('click',function(){
-      infoWindow.open(map,marker);
+    //   marker.addListener('click',function(){
+    //   infoWindow.open(map,marker);
 
-     })
+    //  })
 
-    }
-    markers.push(props);
+    // }
+    // markers.push(props);
   }
+
+
+
 
   let markers = [
   {
@@ -99,50 +161,6 @@ google.maps.event.addListener(map,'click',function(event){
   }
   ]
 
-  console.log(markers);
-
-
+  // console.log(markers);
 
 //submit to database
-
-
-    // if(($("#marker-input").css('display') === 'none')){
-    //       $("#marker-input").toggle(500,"linear");
-    //       $("#location-form").slideUp();
-    //     }
-
-
-
-// changing icons ( optional )
-
-// $('input[type=radio][name="optionsRadios"]').change(function() {
-//   if ($("input[name=optionsRadios]:checked")){
-//     marker.setIcon($("input[name=optionsRadios]:checked").next().attr(''))
-//   }
-// });
-
-// function geocode(){
-
-
-//     //formatted Address
-//     let formattedAddress = response.data.results[0].formatted_address;
-
-//     document.getElementById('map-location').textContent = formattedAddress;
-//     document.getElementById('map-title').textContent = input.title;
-
-//     // if(($("#marker-input").css('display') === 'none')){
-//     //       $("#marker-input").toggle(500,"linear");
-//     //       $("#location-form").slideUp();
-//     //     }
-
-//     return map.setCenter(new google.maps.LatLng(lat,lng) );
-
-
-//   })
-
-
-
-
-
-
-

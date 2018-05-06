@@ -26,7 +26,7 @@ module.exports = knex => {
 
   router.post('/new',(req, res) =>{
 
-    const formInput = {
+    const mapInput = {
       user_id:1
     }
 
@@ -35,12 +35,12 @@ module.exports = knex => {
     let mapLocation = req.body.location
     let mapTitle = req.body.title
 
-    formInput["location"] = mapLocation
-    formInput["title"] = mapTitle
-    formInput["coordinates"] = knex.raw(`point(${req.body.coordinates.lat},${req.body.coordinates.lng})`)
+    mapInput["location"] = mapLocation
+    mapInput["title"] = mapTitle
+    mapInput["coordinates"] = knex.raw(`point(${req.body.coordinates.lat},${req.body.coordinates.lng})`)
 
 
-    knex('maps').insert(formInput).returning('*').then(([r])=>{
+    knex('maps').insert(mapInput).returning('*').then(([r])=>{
       console.log(r.id);
 
       res.redirect(r.id)
