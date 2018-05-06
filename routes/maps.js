@@ -34,7 +34,8 @@ function aggregateData(data) {
     );
 
     const favObj = {
-      favourite_id: dataItem.favourite_id
+      favourite_id: dataItem.favourite_id,
+      user_id: dataItem.favourite_user_id
     };
 
     const filterFavourite = mapData[dataItem.map_id].favourites.filter(
@@ -82,7 +83,8 @@ module.exports = knex => {
           "markers.image_url as marker_img_url",
           "markers.coordinates as marker_coordinates",
           "markers.map_id as map_id",
-          "favourites.id as favourite_id"
+          "favourites.id as favourite_id",
+          "favourites.user_id as favourite_user_id"
         )
         .then(map => {
           const parseData = aggregateData(map);
