@@ -15,10 +15,10 @@ module.exports = (knex) => {
   }),
 
     router.post("/new", (req,res) => {
-console.log(req.body)
+      console.log(req.body)
       const markerInput = {
         user_id:2,
-        map_id:47
+        map_id:3
       }
 
 

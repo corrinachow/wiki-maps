@@ -68,7 +68,7 @@ function createMarkerForm(map) {
     .attr("type", "submit")
     .addClass("btn btn-primary btn-block")
     .text("Submit");
-  $markerForm = $("<form>").attr("id", "marker-input");
+  $markerForm = $("<form>").attr({"id":"marker-input", "method;":"POST", "action":"/api/markers/new"});
 
   return $markerForm.append($titleGroup, $photoUpload, $markerDesc, $submitBtn);
 }
