@@ -55,7 +55,7 @@ function createMapBody(map) {
 
   const $mapCreator = $("<span>")
     .addClass("font-weight-bold text-info")
-    .text(map_creator);
+    .text(map_creator.username).attr('data-userid', map_creator.user_id);
 
   const $mapTitle = $("<h3>")
     .addClass("card-text py-2")

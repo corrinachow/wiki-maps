@@ -106,7 +106,7 @@ function createMapsFooter(map) {
 
   const $byUsername = $("<h3>")
     .addClass("d-inline my-2")
-    .text(`by ${map_creator}`);
+    .text(`by ${map_creator.username}`);
 
   const $mapLikes = createMapLikes(map);
 
@@ -125,11 +125,11 @@ function createMapLikes(map) {
 
   const $likeAmt = $("<span>")
     .addClass("py-0 font-weight-bold text-uppercase text-muted")
-    .text(` ${favourites.length}`)
+    .text(` ${favourites.length}`);
 
   const $mapLikes = $("<div>")
     .addClass("d-inline float-right pt-2")
-    .append($likeBtn, $likeAmt).css({ position: "absolute", left: "62%" });
+    .append($likeBtn, $likeAmt)
 
   return $mapLikes;
 }
