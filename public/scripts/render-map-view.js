@@ -8,14 +8,16 @@ function makeInput(type, name) {
   return $("<input>").attr({ type: type, name: name });
 }
 
-function createMapHeading(title) {
+function createMapHeading(map) {
+  const { map_title, map_location } = map;
+
   $mapLocationSmall = $("<small>")
     .attr("id", "map-location")
-    .text(" Temporary");
+    .text(` ${map_location}`);
   return ($mapHeading = $("<h1>")
     .addClass("my-4")
     .attr("id", "map-title")
-    .append(title, $mapLocationSmall));
+    .append(map_title, $mapLocationSmall));
 }
 
 function createUploadForm(parentDiv) {
@@ -73,9 +75,8 @@ function createMarkerForm(map) {
 
 function createMapView(map) {
   console.log("In createMapView");
-  const { map_title, favourites } = map;
+  const { favourites } = map;
 
-  console.log(map);
   const $mapCanvas = $("<div>")
     .addClass("col-md-8")
     .attr("id", "map-canvas");
@@ -83,7 +84,7 @@ function createMapView(map) {
   const $viewMapContainer = $("<div>").addClass("container map");
 
   // Map heading
-  const $mapHeading = createMapHeading(map_title);
+  const $mapHeading = createMapHeading(map);
 
   // Marker form field
   const $markerFormField = createMarkerForm(map);
@@ -102,6 +103,7 @@ function createMapView(map) {
 }
 
 function createMapsFooter(map) {
+  console.log(map)
   const { map_creator, favourites } = map;
 
   const $byUsername = $("<h3>")

@@ -18,7 +18,9 @@
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
   <!-- Internal Javascript -->
-  <script type="text/javascript" src="/scripts/create-map.js"></script>
+  <script type="text/javascript" src="/scripts/createMap.js"></script>
+    <script type="text/javascript" src="/scripts/render-map-view.js"></script>
+    <script type="text/javascript" src="/scripts/render-show-map.js"></script>
 
 </head>
 
@@ -35,67 +37,7 @@
       <h1 class="my-4" id = "map-title">
         <small id="map-location"></small>
       </h1>
-
-      <!-- Map Row -->
-      <div class="row">
-        <!-- <div class="col-md-8"> -->
-         <div class="col-md-8" id="map-canvas"></div>
-         <!-- find location -->
-         <div class="col-md-4">
-          <div class="container">
-            <form id ='location-form' method='POST' action="/api/maps/new">
-             <div class="form-group">
-               <h2 id ='text-center'>Name of Map</h2>
-                <input type="text" class="form-control" id="map-title-input" placeholder="Best coffee ever!" name="map_title" action="/" method="POST">
-              </div>
-            <div id="enter-location">
-              <h2 id ='text-center'>Location</h2>
-              <input type="text" id='location-input' class="form-control form-control-lg" placeholder="Toronto" name="location" action="/" method="POST">
-              <br>
-              <button type = 'submit' class='btn btn-primary btn-block'>Submit</button>
-            </form>
-            <div id="formatted-address"></div>
-          </div>
-
-              <!-- marker form -->
-
-            <!-- title -->
-        <form id="marker-form" method="POST" action="/api/markers/new">
-           <div class="form-group">
-            <label for="marker_title">Title</label>
-          <input id="marker-title" type="text" name="marker_title" class="form-control">
-        </div>
-
-          <!-- upload photos -->
-              <div class="form-group">
-                <label for="exampleInputFile">Upload a photo</label>
-                <input type="text" class="form-control" id="marker-image" placeholder="image url: https://" name="marker_image">
-              </div>
-               <!-- discription -->
-              <div class="form-group">
-                <label for="exampleTextarea">Description</label>
-                <textarea class="form-control" id="marker-desc" rows="3" name="marker_description"></textarea>
-              </div>
-              <button type="submit" class="btn btn-primary btn-block">Submit</button>
-            </form>
-            </div>
-          </div>
-        </div>
-        <!-- username -->
-        <div id="map-info" class="my-4">
-          <h3 class="d-inline my-2">by Username</h3>
-          <!-- favourites -->
-          <div class="d-inline float-right pt-2">
-            <span>&hearts; </span><span class="py-0 font-weight-bold text-uppercase text-muted">382937</span>
-          </div>
-        </div>
-      </div>
-
-
-
-
-
-
+    </div>
 
 
     </main>
@@ -106,7 +48,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDwqMRP7XfcwpGlHAXUyhv5c1_1jFKs84c&callback=initMap">
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDwqMRP7XfcwpGlHAXUyhv5c1_1jFKs84c">
     </script>
   </body>
   </html>

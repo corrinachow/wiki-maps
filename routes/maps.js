@@ -9,6 +9,7 @@ function aggregateData(data) {
     mapData[dataItem.map_id] = mapData[dataItem.map_id] || {
       map_id: dataItem.map_id,
       map_title: dataItem.map_title,
+      map_location: dataItem.map_location,
       map_coordinates: dataItem.map_coordinates,
       map_creator: { user_id: dataItem.user_id, username: dataItem.username },
       favourites: []
@@ -73,6 +74,7 @@ module.exports = knex => {
           "users.id as user_id",
           "maps.id as map_id",
           "maps.title as map_title",
+          "maps.location as map_location",
           "maps.coordinates as map_coordinates",
           "markers.id as marker_id",
           "markers.title as marker_title",

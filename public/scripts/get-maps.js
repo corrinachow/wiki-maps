@@ -1,7 +1,15 @@
+function generateRandomImg(){
+  const randomNumber = Math.random().toString().substr(3,6);
+  const collectionArr = [289662,1625880,1886495, 474683]
+  return `https://source.unsplash.com/collection/474683/288x255/?sig=${randomNumber}`
+}
+
 function createMapElement(map) {
+  // console.log(map)
   [id] = Object.keys(map);
   const { map_id, map_coordinates, map_creator } = map[id];
 
+  const $randomImageUrl = map.markers[Math.floor(Math.random() * map.markers.length)].marker_img_url;
   const $mapBody = createMapBody(map);
   // Map outer container
   $mapContainer = $("<div>")
@@ -13,7 +21,7 @@ function createMapElement(map) {
     .append(
       $("<img>")
         .addClass("card-img-top")
-        .attr("src", "http://via.placeholder.com/288x225")
+        .attr("src", generateRandomImg())
     );
 
   return $mapContainer.append($mapImg.append($mapBody));
@@ -21,7 +29,7 @@ function createMapElement(map) {
 
 function createMapActions(map) {
   [id] = Object.keys(map);
-  const {map_coordinates, favourites } = map[id];
+  const { map_coordinates, favourites } = map[id];
   const $viewBtn = $("<button>")
     .attr("type", "button")
     .addClass("btn btn-sm btn-outline-secondary")
@@ -31,8 +39,8 @@ function createMapActions(map) {
     .addClass("btn-group")
     .append($viewBtn);
 
-  const $viewMapLink = $("<p>")
-    // .attr("href", `/maps/${id}`)
+  const $viewMapLink = $("<a>")
+    .attr("href", `/maps/${id}`)
     .append($btnGroup)
     .css("text-decoration", "none");
 
@@ -55,7 +63,8 @@ function createMapBody(map) {
 
   const $mapCreator = $("<span>")
     .addClass("font-weight-bold text-info")
-    .text(map_creator.username).attr('data-userid', map_creator.user_id);
+    .text(map_creator.username)
+    .attr("data-userid", map_creator.user_id);
 
   const $mapTitle = $("<h3>")
     .addClass("card-text py-2")

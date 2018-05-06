@@ -1,5 +1,5 @@
 $(() => {
-  for (i = 1; i < 10; i++) {
+  for (i = 1; i < 7; i++) {
   $.ajax({
     method: "GET",
     url: `/api/maps/${i}`
