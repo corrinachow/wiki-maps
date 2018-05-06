@@ -124,10 +124,11 @@ module.exports = knex => {
         });
     }),
     router.post("/:id", (req, res) => {
+      console.log(req.body)
       //FIXME: use user_id from cookie lmfao
 
       const favouriteObj = {
-        user_id: 1,
+        user_id: req.body.user_id,
         map_id: req.params.id
       };
 
