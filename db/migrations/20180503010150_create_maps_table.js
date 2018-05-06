@@ -3,6 +3,7 @@ exports.up = function(knex, Promise) {
     table.increments("id").primary();
     table.string("title");
     table.specificType('coordinates', 'POINT');
+    table.string('location');
     table
       .integer("user_id")
       .references("id")

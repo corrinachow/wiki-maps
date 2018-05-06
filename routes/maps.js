@@ -5,7 +5,6 @@ const router = express.Router();
 
 function aggregateData(data) {
   const mapData = {};
-
   for (const dataItem of data) {
     mapData[dataItem.map_id] = mapData[dataItem.map_id] || {
       map_id: dataItem.map_id,
@@ -95,7 +94,29 @@ module.exports = knex => {
         .then(favourites => {
           res.json(favourites);
         });
-    });
+    }),
+    router.post('/new',(req, res) =>{
+
+    const mapInput = {
+      user_id:1
+    }
+
+    console.log(req.body)
+
+    let mapLocation = req.body.location
+    let mapTitle = req.body.title
+
+    mapInput["location"] = mapLocation
+    mapInput["title"] = mapTitle
+    mapInput["coordinates"] = knex.raw(`point(${req.body.coordinates.lat},${req.body.coordinates.lng})`)
+
+
+    knex('maps').insert(mapInput).returning('*').then(([r])=>{
+      console.log(r.id);
+
+      res.redirect(r.id)
+    })
+  });
 
   return router;
 };
