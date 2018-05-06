@@ -39,7 +39,7 @@ $("#location-form").on("submit", function(e) {
     });
 });
 
-$(() => {
+$(window).on("load", function() {
   const mapID = window.location.pathname.toString().substr(6);
   $.ajax({
     type: "GET",

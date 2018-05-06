@@ -97,28 +97,31 @@ module.exports = knex => {
           res.json(favourites);
         });
     }),
-    router.post('/new',(req, res) =>{
+    router.post("/new", (req, res) => {
 
-    const mapInput = {
-      user_id:1
-    }
+      // Fix user_id to grab user_id from cookie...
+      const mapInput = {
+        user_id: 1
+      };
 
-    console.log(req.body)
+      const mapLocation = req.body.location;
+      const mapTitle = req.body.title;
 
-    let mapLocation = req.body.location
-    let mapTitle = req.body.title
+      mapInput["location"] = mapLocation;
+      mapInput["title"] = mapTitle;
+      mapInput["coordinates"] = knex.raw(
+        `point(${req.body.coordinates.lat},${req.body.coordinates.lng})`
+      );
 
-    mapInput["location"] = mapLocation
-    mapInput["title"] = mapTitle
-    mapInput["coordinates"] = knex.raw(`point(${req.body.coordinates.lat},${req.body.coordinates.lng})`)
+      knex("maps")
+        .insert(mapInput)
+        .returning("*")
+        .then(([r]) => {
+          console.log(r.id);
 
-
-    knex('maps').insert(mapInput).returning('*').then(([r])=>{
-      console.log(r.id);
-
-      res.redirect(r.id)
-    })
-  });
+          res.redirect(r.id);
+        });
+    });
 
   return router;
 };
