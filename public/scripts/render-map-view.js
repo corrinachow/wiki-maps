@@ -36,8 +36,6 @@ function createUploadForm(parentDiv) {
   });
 
   return parentDiv.append(
-    // $uploadLabel,
-    // $uploadInput.addClass("form-control-file"),
     $fileHelpSmall,
     $fromUrlInput.addClass("form-control")
   );
@@ -129,6 +127,12 @@ function createMapLikes(map) {
   const $likeBtn = $("<span>")
     .addClass("like")
     .html(`<i title="Like map" class="fas fa-heart"></i>`);
+
+  for (const favourite of favourites) {
+    if (Cookies.get("user_id") == favourite.user_id) {
+      $likeBtn.css("color", "rgb(255, 0, 0)");
+    }
+  }
 
   const $likeAmt = $("<span>")
     .addClass("py-0 font-weight-bold text-uppercase text-muted likes ml-2")
