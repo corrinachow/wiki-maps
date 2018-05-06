@@ -33,6 +33,8 @@ function createMapElement(map) {
 function createMapActions(map) {
   [id] = Object.keys(map);
   const { map_coordinates, favourites } = map[id];
+
+  console.log(favourites);
   const $viewBtn = $("<button>")
     .attr("type", "button")
     .addClass("btn btn-sm btn-outline-secondary")
@@ -50,6 +52,12 @@ function createMapActions(map) {
   const $likeBtn = $("<i>")
     .attr("title", "Like post")
     .addClass("fas fa-heart like mx-2");
+
+  for (const favourite of favourites) {
+    if (Cookies.get("user_id") == favourite.user_id) {
+      $likeBtn.css("color", "rgb(255, 0, 0)");
+    }
+  }
 
   const $likeCounter = $("<span>")
     .addClass("likes")
