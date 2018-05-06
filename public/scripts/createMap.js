@@ -1,4 +1,3 @@
-let newMarker = null;
 let marker;
 let map;
 const latitude = [];
@@ -70,10 +69,14 @@ $(() => {
 });
 
 function initMap() {
+  //map options
+  console.log("in initMap");
+
   //new map
   map = new google.maps.Map(document.getElementById("map-canvas"), options);
 
   for (const m of markers) {
+    console.log(m);
     const position = new google.maps.LatLng(m[2], m[3]);
     console.log(position);
     marker = new google.maps.Marker({
@@ -82,9 +85,6 @@ function initMap() {
       title: m[0]
     });
   }
-
-  // Info window content
-
   //listen for click on map
   google.maps.event.addListener(map, "click", function(event) {
     addMarker({ coords: event.latLng });
@@ -126,18 +126,16 @@ function initMap() {
 function addMarker(props) {
   latitude.push(props.coords.lat());
   longitude.push(props.coords.lng());
-  console.log(latitude,longitude)
 
-  if (!newMarker) {
-
+  if (marker) {
     //if marker already was created change positon
-    newMarker = new google.maps.Marker({
+    marker.setPosition(props.coords);
+  } else {
+    //create a marker
+    marker = new google.maps.Marker({
       position: props.coords,
       map: map,
       draggable: true
     });
-  } else {
-    //create a newMarker
-    newMarker.setPosition(props.coords);
   }
 }

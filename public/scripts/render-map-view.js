@@ -27,14 +27,17 @@ function createUploadForm(parentDiv) {
   $fileHelpSmall = $("<small>")
     .attr("id", "fileHelp")
     .addClass("form-text text-muted")
-    .text("Or upload an image URL");
+    .text("Use an image URL");
 
   // Change name for fromUrlInput
-  $fromUrlInput = makeInput("text", "image-url");
+  $fromUrlInput = makeInput("text", "marker-url").attr({
+    id: "marker-image",
+    name: "marker_image"
+  });
 
   return parentDiv.append(
-    $uploadLabel,
-    $uploadInput.addClass("form-control-file"),
+    // $uploadLabel,
+    // $uploadInput.addClass("form-control-file"),
     $fileHelpSmall,
     $fromUrlInput.addClass("form-control")
   );
@@ -44,7 +47,7 @@ function createDescriptionForm(parentDiv) {
   $markerDescLabel = makeLabel("marker-desc", "Description");
   $markerDescInput = $("<textarea>")
     .addClass("form-control")
-    .attr({ id: "marker-desc", rows: "3" });
+    .attr({ id: "marker-desc", rows: "3", name: "marker_description" });
 
   return parentDiv.append($markerDescLabel, $markerDescInput);
 }
@@ -68,7 +71,11 @@ function createMarkerForm(map) {
     .attr("type", "submit")
     .addClass("btn btn-primary btn-block")
     .text("Submit");
-  $markerForm = $("<form>").attr({"id":"marker-input", "method;":"POST", "action":"/api/markers/new"});
+  $markerForm = $("<form>").attr({
+    id: "marker-form",
+    method: "POST",
+    // action: "/api/markers/new"
+  });
 
   return $markerForm.append($titleGroup, $photoUpload, $markerDesc, $submitBtn);
 }
@@ -103,7 +110,7 @@ function createMapView(map) {
 }
 
 function createMapsFooter(map) {
-  console.log(map)
+  console.log(map);
   const { map_creator, favourites } = map;
 
   const $byUsername = $("<h3>")
@@ -131,37 +138,37 @@ function createMapLikes(map) {
 
   const $mapLikes = $("<div>")
     .addClass("d-inline float-right pt-2")
-    .append($likeBtn, $likeAmt)
+    .append($likeBtn, $likeAmt);
 
   return $mapLikes;
 }
 
-$(window).on("load", function() {
-  $("button").on("click", function(e) {
-    console.log("Button was clicked");
+// $(window).on("load", function() {
+//   $("button").on("click", function(e) {
+//     console.log("Button was clicked");
 
-    $mapID = $(this)
-      .closest(".col-md-4")
-      .data("mapid");
+//     $mapID = $(this)
+//       .closest(".col-md-4")
+//       .data("mapid");
 
-    $.ajax({
-      method: "GET",
-      url: "/api/maps/" + $mapID
-    })
-      .done(map => {
-        let $mapView = createMapView(map[$mapID]).css("display", "none");
+//     $.ajax({
+//       method: "GET",
+//       url: "/api/maps/" + $mapID
+//     })
+//       .done(map => {
+//         let $mapView = createMapView(map[$mapID]).css("display", "none");
 
-        if ($("section.jumbotron").length > 0) {
-          $("section.jumbotron").replaceWith($mapView);
-        } else {
-          $("div.map").replaceWith($mapView);
-        }
-        $(".map").fadeIn();
-      })
-      .then(() => {
-        $("#map-title").css("padding-top", "6rem");
-        initMap();
-        $("html, body").animate({ scrollTop: 0 }, "slow");
-      });
-  });
-});
+//         if ($("section.jumbotron").length > 0) {
+//           $("section.jumbotron").replaceWith($mapView);
+//         } else {
+//           $("div.map").replaceWith($mapView);
+//         }
+//         $(".map").fadeIn();
+//       })
+//       .then(() => {
+//         $("#map-title").css("padding-top", "6rem");
+//         initMap();
+//         $("html, body").animate({ scrollTop: 0 }, "slow");
+//       });
+//   });
+// });
