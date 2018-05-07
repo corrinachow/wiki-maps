@@ -16,6 +16,7 @@ $(() => {
     url: `/api/users/${$userID}`
   })
     .done(user => {
+      $(".username").text(user[$userID].username)
       for (let i = 0; i < 4; i++) {
         $.ajax({
           method: "GET",
