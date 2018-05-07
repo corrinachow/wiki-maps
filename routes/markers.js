@@ -18,6 +18,8 @@ module.exports = knex => {
       console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 
       const markerInput = {
+        user_id: req.body.user_id,
+        map_id: req.body.map_id
       };
 
 
