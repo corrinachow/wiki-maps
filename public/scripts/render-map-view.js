@@ -9,7 +9,7 @@ function makeInput(type, name) {
 }
 
 function createMapHeading(map) {
-  console.log(map)
+  console.log(map);
   const { map_title, map_location } = map;
 
   $mapLocationSmall = $("<small>")
@@ -82,8 +82,8 @@ function createMarkerForm(map) {
 }
 
 function createMapView(map) {
-  console.log('in createViewMap')
-  console.log(map)
+  console.log("in createViewMap");
+  console.log(map);
   const { favourites } = map ? map : {};
 
   const $mapCanvas = $("<div>")
@@ -146,10 +146,12 @@ function createMapLikes(map) {
     }
   }
 
+  const $numberLikes = favourites[0].favourite_id
+    ? favourites.length
+    : favourites.length - 1;
   const $likeAmt = $("<span>")
     .addClass("py-0 font-weight-bold text-uppercase text-muted likes ml-2")
-    .text(`${favourites.length}`);
-
+    .text(`${$numberLikes}`);
 
   const $mapLikes = $("<div>")
     .addClass("d-inline pt-2 ml-5")
