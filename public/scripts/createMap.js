@@ -133,6 +133,9 @@ function initMap() {
           lng: longitude[longitude.length - 1]
         }
       };
+      console.log("~~~~~~~~~~~~~")
+      console.log(markerObj)
+      console.log("~~~~~~~~~~~~~")
 
       $.ajax({
         type: "POST",
