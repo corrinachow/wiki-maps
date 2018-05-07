@@ -69,9 +69,10 @@ footer p {
 
 .gm-style-iw {
   display:flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  width:150px;
+  width: 5rem;
 }
 
 .gm-style-iw p{
@@ -80,7 +81,7 @@ footer p {
 }
 
 .gm-style-iw img {
-  width:100px;
+  width: 10rem;
   height:auto;
   border-radius:5px;
 }
