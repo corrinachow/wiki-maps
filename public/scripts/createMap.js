@@ -71,7 +71,10 @@ function initMap() {
         <img src=${$markerImage}>
         <h4>${markers[i][0]}</h4>
         <p>${markers[i][1]}</p>
-        <i title="Delete marker" class="far fa-trash-alt" onclick=deleteMarker(${markers[i][5]})></i>
+        <div class="marker-actions" style="display: flex;">
+        <i title="Edit marker" class="far fa-edit fa-lg" onclick=editMarker(${markers[i][5]}) style="padding: 0.2rem 1rem 0.8rem 1rem")></i>
+        <i title="Delete marker" class="far fa-trash-alt fa-lg" onclick=deleteMarker(${markers[i][5]}) style="padding: 0.2rem 1rem 0.8rem 1rem"></i>
+        </div>
         </div>`
       ])
 
