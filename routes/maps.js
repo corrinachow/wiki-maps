@@ -54,7 +54,7 @@ function aggregateData(data) {
 
 module.exports = knex => {
   router.get("/new", (req, res) => {
-    res.send("new maps page");
+    res.render("create_maps");
   }),
     router.get("/", (req, res) => {
       knex("maps")
@@ -101,6 +101,8 @@ module.exports = knex => {
     }),
     router.post("/new", (req, res) => {
       // FIXME: user_id to grab user_id from cookie...
+
+      console.log(req.body)
       const mapInput = {
         user_id: 1
       };
@@ -117,12 +119,32 @@ module.exports = knex => {
       knex("maps")
         .insert(mapInput)
         .returning("*")
-        .then(([r]) => {
-          console.log(r.id);
+        .then(([result])=> {
 
-          res.redirect(r.id);
-        });
-    }),
+
+          const favouriteObj = {user_id:1, map_id: result.id}
+          console.log(favouriteObj)
+
+          knex("favourites")
+            .insert(favouriteObj)
+            .returning("*")
+            .then(([result])=> {
+              const markerObj = {
+              user_id: 1,
+              map_id: result.map_id,
+              title: "Center of your map!",
+              image_url: "",
+              description:"",
+              coordinates: knex.raw(`point(${req.body.coordinates.lat},${req.body.coordinates.lng})`)}
+
+              return knex("markers").insert(markerObj).returning("*")
+
+          })
+            .then(([r]) => {
+              console.log(r);
+              res.send(r);
+            })
+          }),
     router.post("/:id", (req, res) => {
       console.log(req.body)
       //FIXME: use user_id from cookie lmfao
@@ -156,8 +178,8 @@ module.exports = knex => {
         })
         .catch(err => {
           console.log(err);
-        });
-    });
-
-  return router;
-};
+        })
+    })
+  })
+  return router
+}

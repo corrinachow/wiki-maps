@@ -59,7 +59,7 @@ function createMarkerForm(map) {
 
   // Create title input field
   $titleLabel = makeLabel("marker-title", "Title");
-  $titleInput = makeInput("text", "marker-title");
+  $titleInput = makeInput("text", "marker-title").attr("id", "marker-title");
   $titleGroup = $("<div>")
     .addClass("form-group")
     .append($titleLabel, $titleInput.addClass("form-control"));
@@ -81,7 +81,8 @@ function createMarkerForm(map) {
 }
 
 function createMapView(map) {
-  const { favourites } = map;
+  console.log('in createViewMap')
+  const { favourites } = map ? map : {};
 
   const $mapCanvas = $("<div>")
     .addClass("col-md-8")
@@ -132,7 +133,7 @@ function createMapsFooter(map) {
 }
 
 function createMapLikes(map) {
-  const { favourites } = map;
+  const { favourites } = map ? map : {};
   const $likeBtn = $("<span>")
     .addClass("like")
     .html(`<i title="Like map" class="fas fa-heart"></i>`);
@@ -144,8 +145,9 @@ function createMapLikes(map) {
   }
 
   const $likeAmt = $("<span>")
-    .addClass("py-0 text-uppercase text-muted likes ml-2")
-    .text(`${favourites.length}`);
+    .addClass("py-0 font-weight-bold text-uppercase text-muted likes ml-2")
+    .text(`${favourites.length - 1}`);
+
 
   const $mapLikes = $("<div>")
     .addClass("d-inline pt-2 ml-5")
@@ -153,32 +155,32 @@ function createMapLikes(map) {
 
   return $mapLikes;
 }
-// $(window).on("load", function() {
-//   $("button").on("click", function(e) {
-//     console.log("Button was clicked");
+$(window).on("load", function() {
+  $("button").on("click", function(e) {
+    console.log("Button was clicked");
 
-//     $mapID = $(this)
-//       .closest(".col-md-4")
-//       .data("mapid");
+    $mapID = $(this)
+      .closest(".col-md-4")
+      .data("mapid");
 
-//     $.ajax({
-//       method: "GET",
-//       url: "/api/maps/" + $mapID
-//     })
-//       .done(map => {
-//         let $mapView = createMapView(map[$mapID]).css("display", "none");
+    $.ajax({
+      method: "GET",
+      url: "/api/maps/" + $mapID
+    })
+      .done(map => {
+        let $mapView = createMapView(map[$mapID]).css("display", "none");
 
-//         if ($("section.jumbotron").length > 0) {
-//           $("section.jumbotron").replaceWith($mapView);
-//         } else {
-//           $("div.map").replaceWith($mapView);
-//         }
-//         $(".map").fadeIn();
-//       })
-//       .then(() => {
-//         $("#map-title").css("padding-top", "6rem");
-//         initMap();
-//         $("html, body").animate({ scrollTop: 0 }, "slow");
-//       });
-//   });
-// });
+        if ($("section.jumbotron").length > 0) {
+          $("section.jumbotron").replaceWith($mapView);
+        } else {
+          $("div.map").replaceWith($mapView);
+        }
+        $(".map").fadeIn();
+      })
+      .then(() => {
+        $("#map-title").css("padding-top", "6rem");
+        initMap();
+        $("html, body").animate({ scrollTop: 0 }, "slow");
+      });
+  });
+});
