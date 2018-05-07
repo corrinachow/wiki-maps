@@ -67,15 +67,23 @@ function createMarkerForm(map) {
 
   $submitBtn = $("<button>")
     .attr("type", "submit")
+    .attr("id", "submit-marker")
     .addClass("btn btn-primary btn-block")
-    .text("Submit");
+    .text("Submit")
+    .css("display","none")
+  $editBtn = $("<button>")
+    .attr("type", "submit")
+    .addClass("btn btn-primary btn-block")
+    .text("Edit")
+    .attr('id', 'edit-marker')
+    .css("display","none")
   $markerForm = $("<form>").attr({
     id: "marker-form",
     method: "POST"
     // action: "/api/markers/new"
   });
 
-  return $markerForm.append($titleGroup, $photoUpload, $markerDesc, $submitBtn);
+  return $markerForm.append($titleGroup, $photoUpload, $markerDesc, $submitBtn, $editBtn);
 }
 
 function createMapView(map) {

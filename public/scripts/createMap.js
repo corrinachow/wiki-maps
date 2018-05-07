@@ -105,13 +105,34 @@ function initMap() {
         return function() {
           infoWindow.setContent(infoWindowContent[i][0]);
           infoWindow.open(map, marker);
+
+            if($("#submit-marker").css('display') == 'block'){
+            $("#submit-marker").toggle()
+            }
+
+          if($("#edit-marker").css('display') == 'none'){
+            $("#edit-marker").toggle()
+          }
+
         }
       })(marker, i));
+
+
     }
+
 
   //listen for click on map
   google.maps.event.addListener(map, "click", function(event) {
     addMarker({ coords: event.latLng });
+
+     if($("#edit-marker").css('display') == 'block'){
+        $("#edit-marker").toggle()
+        }
+
+
+    if($("#submit-marker").css('display') == 'none'){
+       $("#submit-marker").toggle()
+    }
 
     $("#marker-form").on("submit", function(e) {
       e.preventDefault();
@@ -120,6 +141,8 @@ function initMap() {
       let markerTitle = $("#marker-title").val();
       let markerImage = $("#marker-image").val();
       let markerDesc = $("#marker-desc").val();
+
+      /// change #id and then alos the name of the object, if names are edit then update database
 
       const mapID = window.location.pathname.toString().substr(6);
 
@@ -159,6 +182,7 @@ function addMarker(props) {
   if (newMarker) {
     //if marker already was created change positon
     newMarker.setPosition(props.coords);
+
   } else {
     //create a marker
     newMarker = new google.maps.Marker({
