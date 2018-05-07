@@ -3,7 +3,7 @@ $(window).on("load", () => {
     e.preventDefault();
 
     console.log("Login clicked");
-    Cookies.set('user_id', '1');
+    Cookies.set('user_id', '43');
     console.log(Cookies.get('user_id'))
   });
 

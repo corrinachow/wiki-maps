@@ -45,7 +45,7 @@ function aggregateData(data) {
     );
     const contrObj = {
       marker_id: dataItem.marker_id,
-      map_id: dataItem.map_id,
+      markers_map_id: dataItem.markers_map_id,
       marker_title: dataItem.marker_title,
       marker_description: dataItem.marker_description,
       marker_coordinates: dataItem.marker_coordinates,
@@ -88,6 +88,7 @@ module.exports = knex => {
       });
   }),
     router.get("/:id", (req, res) => {
+      console.log(req.params.id)
       knex("users")
         .join("maps", "users.id", "maps.user_id")
         .join("markers", "users.id", "markers.user_id")
@@ -105,7 +106,7 @@ module.exports = knex => {
           "markers.description as marker_description",
           "markers.image_url as marker_img_url",
           "markers.coordinates as marker_coordinates",
-          "markers.map_id as map_id",
+          "markers.map_id as markers_map_id",
           "favourites.map_id as favourite_map"
         )
         .then(user => {
