@@ -17,6 +17,8 @@ $(() => {
   })
     .done(user => {
       $(".username").text(user[$userID].username)
+      $("#maps-created").text(user.maps.length)
+      $("#contributions-made").text(user.contributions.length)
       for (let i = 0; i < 4; i++) {
         $.ajax({
           method: "GET",

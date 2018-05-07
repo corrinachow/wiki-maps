@@ -3,7 +3,7 @@ function generateRandomImg() {
     .toString()
     .substr(3, 6);
   const collectionArr = [289662, 1625880, 1886495, 474683];
-  return `https://source.unsplash.com/collection/474683/288x255/?sig=${randomNumber}`;
+  return `https://source.unsplash.com/collection/499895/288x255/?sig=${randomNumber}`;
 }
 
 function createMapElement(map) {
