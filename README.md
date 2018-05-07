@@ -6,7 +6,7 @@ users can search for a loaction and create maps with a topic, for example 'Best 
 
 Users can view all maps on the home page whether they are logged in or not, however only authenticated users can create maps,modify maps (add, edit and remove markers) and favourite maps. Users have profiles that indicate their favourite maps as well as the maps that they have contributed to.
 
-##Final Product
+## Final Product
 
 !["home page"](https://github.com/corrinachow/wiki-maps/blob/master/docs/home-page.png)
 !["view maps"](https://github.com/corrinachow/wiki-maps/blob/master/docs/view-maps.png)
