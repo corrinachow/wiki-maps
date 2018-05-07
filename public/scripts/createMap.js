@@ -6,37 +6,41 @@ const longitude = [];
 let options;
 const markers = [];
 
-$("#location-form").on("submit", function(e) {
-  e.preventDefault();
-  let mapLocation = $("#location-input").val();
-  let mapTitle = $("#map-title-input").val();
-  axios
-  .get("https://maps.googleapis.com/maps/api/geocode/json", {
-    params: {
-      address: mapLocation,
-      key: "AIzaSyCDMocOMHEh8J4yiu_I8QMurFjMgBfrldk"
-    }
-  })
-  .then(function(response) {
-      let lat = response.data.results[0].geometry.location.lat;
-      let lng = response.data.results[0].geometry.location.lng;
+// $("#location-form").on("submit", function(e) {
+//   e.preventDefault();
+//   let mapLocation = $("#location-input").val();
+//   let mapTitle = $("#map-title-input").val();
+//   axios
+//   .get("https://maps.googleapis.com/maps/api/geocode/json", {
+//     params: {
+//       address: mapLocation,
+//       key: "AIzaSyCDMocOMHEh8J4yiu_I8QMurFjMgBfrldk"
+//     }
+//   })
+//   .then(function(response) {
+//       let lat = response.data.results[0].geometry.location.lat;
+//       let lng = response.data.results[0].geometry.location.lng;
 
-      const mapObj = {
-        location: mapLocation,
-        title: mapTitle,
-        coordinates: { lat: lat, lng: lng }
-      };
+//       const mapObj = {
+//         user_id: Cookies.get('user_id'),
+//         location: mapLocation,
+//         title: mapTitle,
+//         coordinates: { lat: lat, lng: lng }
+//       };
 
-      $.ajax({
-        type: "POST",
-        url: "/api/maps/new",
-        data: mapObj,
-        success: function(data) {
-          window.location.href = `/maps/${data[0].id}`;
-        }
-      });
-  });
-});
+//       console.log("about to post")
+//       $.ajax({
+//         type: "POST",
+//         url: "/api/maps/new",
+//         data: mapObj,
+//         success: function(data) {
+//           console.log('~~~~~~~')
+//           console.log(data['id'])
+//           window.location.href = `/maps/${data[0].id}`;
+//         }
+//       });
+//   });
+// });
 
 $(window).on("load", function() {
   const mapID = window.location.pathname.toString().substr(6);

@@ -9,6 +9,7 @@ function makeInput(type, name) {
 }
 
 function createMapHeading(map) {
+  console.log(map)
   const { map_title, map_location } = map;
 
   $mapLocationSmall = $("<small>")
@@ -82,6 +83,7 @@ function createMarkerForm(map) {
 
 function createMapView(map) {
   console.log('in createViewMap')
+  console.log(map)
   const { favourites } = map ? map : {};
 
   const $mapCanvas = $("<div>")
