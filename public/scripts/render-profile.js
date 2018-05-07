@@ -14,14 +14,39 @@ $(() => {
   $.ajax({
     method: "GET",
     url: `/api/users/${$userID}`
-  }).done(user => {
-    for (let i = 0; i < 3; i++) {
-      $.ajax({
-        method: "GET",
-        url: `/api/maps/${user.maps[i].map_id}`
-      }).done(map => {
-        $(`.users-map-${i}`).replaceWith(createMapElement(map));
-      });
-    }
-  });
+  })
+    .done(user => {
+      for (let i = 0; i < 4; i++) {
+        $.ajax({
+          method: "GET",
+          url: `/api/maps/${user.contributions[i].markers_map_id}`
+        }).done(map => {
+          $(`.users-contribution-${i}`).replaceWith(createMapElement(map));
+        });
+        $.ajax({
+          method: "GET",
+          url: `/api/maps/${user.favourites[i].map_id}`
+        }).done(map => {
+          $(`.users-favourite-${i}`).replaceWith(createMapElement(map));
+        });
+        $.ajax({
+          method: "GET",
+          url: `/api/maps/${user.maps[i].map_id}`
+        }).done(map => {
+          $(`.users-map-${i}`).replaceWith(createMapElement(map));
+        });
+      }
+    })
+
+  //     $.ajax({
+  //   method: "GET",
+  //   url: `/api/users/${$userID}`
+  // }).done(user => {
+  //   for (let i = 0; i < 4; i++) {
+  //     $.ajax({
+  //       method: "GET",
+  //       url: `/api/maps/${user.maps[i].map_id}`
+  //     }).done(map => {
+  //       $(`.users-map-${i}`).replaceWith(createMapElement(map));
+  //     });
 });
