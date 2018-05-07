@@ -8,8 +8,11 @@ Users can view all maps on the home page whether they are logged in or not, howe
 
 ##Final Product
 
-!["Screenshot of the login page"]()
-!["Screenshot of the create new urls page"]()
+!["home page"](https://github.com/corrinachow/wiki-maps/blob/master/docs/home-page.png)
+!["view maps"](https://github.com/corrinachow/wiki-maps/blob/master/docs/view-maps.png)
+!["create maps"](https://github.com/corrinachow/wiki-maps/blob/master/docs/create-maps-page.png)
+!["edit maps"](https://github.com/corrinachow/wiki-maps/blob/master/docs/edit-maps-page.png)
+!["mobile"](https://github.com/corrinachow/wiki-maps/blob/master/docs/mobile-users-page.png)
 
 ## Dependencies
 
