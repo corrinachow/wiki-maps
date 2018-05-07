@@ -83,8 +83,8 @@ module.exports = knex => {
           "markers.image_url as marker_img_url",
           "markers.coordinates as marker_coordinates",
           "markers.map_id as marker_map_id",
-          // "favourites.id as favourite_id",
-          // "favourites.user_id as favourite_user_id"
+          "favourites.id as favourite_id",
+          "favourites.user_id as favourite_user_id"
         )
         .then(map => {
           console.log(map)

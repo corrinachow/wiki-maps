@@ -18,14 +18,14 @@ module.exports = knex => {
       console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 
       const markerInput = {
-        user_id: 2,
-        map_id: 3
       };
+
 
       let markerTitle = req.body.title;
       let markerImage = req.body.image_url;
       let markerDesc = req.body.description;
 
+      console.log(markerInput)
       markerInput["title"] = markerTitle;
       markerInput.map_id = req.body.map_id;
       markerInput["image_url"] = markerImage;
@@ -40,7 +40,6 @@ module.exports = knex => {
         .insert(markerInput)
         .returning("*")
         .then(([r]) => {
-          console.log(r, "returning");
           res.send(r);
         });
     });

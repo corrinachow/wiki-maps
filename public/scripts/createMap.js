@@ -6,42 +6,6 @@ const longitude = [];
 let options;
 const markers = [];
 
-// $("#location-form").on("submit", function(e) {
-//   e.preventDefault();
-//   let mapLocation = $("#location-input").val();
-//   let mapTitle = $("#map-title-input").val();
-//   axios
-//   .get("https://maps.googleapis.com/maps/api/geocode/json", {
-//     params: {
-//       address: mapLocation,
-//       key: "AIzaSyCDMocOMHEh8J4yiu_I8QMurFjMgBfrldk"
-//     }
-//   })
-//   .then(function(response) {
-//       let lat = response.data.results[0].geometry.location.lat;
-//       let lng = response.data.results[0].geometry.location.lng;
-
-//       const mapObj = {
-//         user_id: Cookies.get('user_id'),
-//         location: mapLocation,
-//         title: mapTitle,
-//         coordinates: { lat: lat, lng: lng }
-//       };
-
-//       console.log("about to post")
-//       $.ajax({
-//         type: "POST",
-//         url: "/api/maps/new",
-//         data: mapObj,
-//         success: function(data) {
-//           console.log('~~~~~~~')
-//           console.log(data['id'])
-//           window.location.href = `/maps/${data[0].id}`;
-//         }
-//       });
-//   });
-// });
-
 $(window).on("load", function() {
   const mapID = window.location.pathname.toString().substr(6);
   $.ajax({
@@ -99,7 +63,6 @@ function initMap() {
 
       console.log(markers[i] ,'new markers')
 
-
       infoWindowContent.push([`
         <h4><strong>${markers[i][0]}</strong></h4>
         <p>${markers[i][1]}</p>
@@ -128,6 +91,7 @@ function initMap() {
       const mapID = window.location.pathname.toString().substr(6);
 
       const markerObj = {
+        user_id: Cookies.get("user_id"),
         map_id: mapID,
         title: markerTitle,
         image_url: markerImage,
