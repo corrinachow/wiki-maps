@@ -57,7 +57,6 @@ function aggregateData(data) {
 
     const favObj = {
       map_id: dataItem.favourite_map
-
     };
 
     const filterFavourite = userData.favourites.filter(
@@ -90,9 +89,9 @@ module.exports = knex => {
     router.get("/:id", (req, res) => {
       console.log(req.params.id)
       knex("users")
-        .join("maps", "users.id", "maps.user_id")
-        .join("markers", "users.id", "markers.user_id")
-        .join("favourites", "users.id", "favourites.user_id")
+        .leftJoin("maps", "users.id", "maps.user_id")
+        .leftJoin("markers", "users.id", "markers.user_id")
+        .leftJoin("favourites", "users.id", "favourites.user_id")
         .where("users.id", req.params.id)
         .select(
           "users.id as user_id",
@@ -116,8 +115,8 @@ module.exports = knex => {
     });
   router.get("/:id/favourites", (req, res) => {
     knex("favourites")
-      .join("users", "users.id", "favourites.user_id")
-      .join("maps", "maps.id", "favourites.map_id")
+      .leftJoin("users", "users.id", "favourites.user_id")
+      .leftJoin("maps", "maps.id", "favourites.map_id")
       .select(
         "maps.id as maps_id",
         "maps.title as map_title",

@@ -58,7 +58,7 @@ module.exports = knex => {
   }),
     router.get("/", (req, res) => {
       knex("maps")
-        .join("users", "users.id", "maps.user_id")
+        .leftJoin("users", "users.id", "maps.user_id")
         .select("username", "maps.id as id", "coordinates", "title")
         .then(results => {
           res.json(results);
@@ -66,9 +66,9 @@ module.exports = knex => {
     }),
     router.get("/:id", (req, res) => {
       knex("maps")
-        .join("users", "users.id", "maps.user_id")
-        .join("markers", "maps.id", "markers.map_id")
-        .join("favourites", "favourites.map_id", "maps.id")
+        .leftJoin("users", "users.id", "maps.user_id")
+        .leftJoin("markers", "maps.id", "markers.map_id")
+        .leftJoin("favourites", "favourites.map_id", "maps.id")
         .where("maps.id", req.params.id)
         .select(
           "username",
