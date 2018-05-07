@@ -13,9 +13,11 @@ function createMapHeading(map) {
 
   $mapLocationSmall = $("<small>")
     .attr("id", "map-location")
-    .text(` ${map_location}`);
+    .text(` ${map_location}`)
+    .addClass("text-secondary my-2")
+    .css({ display: "block", "font-size": "1rem" });
   return ($mapHeading = $("<h1>")
-    .addClass("my-4")
+    .addClass("my-4 ")
     .attr("id", "map-title")
     .append(map_title, $mapLocationSmall));
 }
@@ -110,9 +112,16 @@ function createMapView(map) {
 function createMapsFooter(map) {
   const { map_creator, favourites } = map;
 
+  const $username = $("<a>")
+    .attr("href", `/users/${map_creator.user_id}`)
+    .text(`by ${map_creator.username}`)
+    .css({ "text-decoration": "none", "font-size": "1.5rem" })
+    .addClass("text-dark");
+
+  console.log($username);
   const $byUsername = $("<h3>")
     .addClass("d-inline my-2")
-    .text(`by ${map_creator.username}`);
+    .html($username);
 
   const $mapLikes = createMapLikes(map);
 
@@ -138,6 +147,7 @@ function createMapLikes(map) {
   const $likeAmt = $("<span>")
     .addClass("py-0 font-weight-bold text-uppercase text-muted likes ml-2")
     .text(`${favourites.length - 1}`);
+
 
   const $mapLikes = $("<div>")
     .addClass("d-inline pt-2 ml-5")
