@@ -19,7 +19,7 @@
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
   <!-- Internal Javascript -->
-
+<script type="text/javascript" src="/scripts/prevent-page-scroll.js"></script>
   <script type="text/javascript" src="/scripts/initMap.js"></script>
   <script type="text/javascript" src="/scripts/render-show-map.js"></script>
   <script type="text/javascript" src="/scripts/handle-login.js"></script>
@@ -34,13 +34,13 @@
       <h1 class="my-4" id = "map-title">
         <small id="map-location"></small>
       </h1>
-      <div class="row">
-       <!-- <div class="col-md-8"> -->
-        <div class="col-md-8" id="map-canvas"></div>
-        <!-- find location -->
-        <!-- find location -->
-        <div class="col-md-4">
-          <div class="container"
+<div class="row">
+   <!-- <div class="col-md-8"> -->
+    <div class="col-md-8" id="map-canvas"></div>
+    <!-- find location -->
+    <!-- find location -->
+<div class="col-md-4">
+          <div class="container">
           <form id ='location-form' method='POST'>
            <div class="form-group">
              <h2 id ='text-center'>Name of Map</h2>
@@ -53,15 +53,16 @@
             <button type='submit' class='btn btn-primary btn-block'>Submit</button>
           </form>
         </div>
-      </main>
-      <% include ./partials/_footer %>
+      </div>
+    </main>
+    <% include ./partials/_footer %>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/holder/2.9.4/holder.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDwqMRP7XfcwpGlHAXUyhv5c1_1jFKs84c&callback=initMap">
+    </script>
+  </body>
+  </html>
 
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/holder/2.9.4/holder.min.js" type="text/javascript"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-      <script
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDwqMRP7XfcwpGlHAXUyhv5c1_1jFKs84c&callback=initMap">
-      </script>
-    </body>
-    </html>
 

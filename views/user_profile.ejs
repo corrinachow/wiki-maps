@@ -6,32 +6,45 @@
   <!-- External CSS -->
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
   <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.11/css/all.css" integrity="sha384-p2jx59pefphTFIpeqCcISO9MdVfIm4pNnsL08A6v5vaQc4owkQqxMV8kg4Yvhaw/" crossorigin="anonymous">
   <!-- Bootstrap core CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
   <!-- Custom CSS -->
   <link rel="stylesheet" href="/styles/album.css" type="text/css" />
+
+  <!--  External Javascript  -->
+  <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
-  <script type="text/javascript" src="/scripts/app.js"></script>
+
+  <!-- Custom Javascrip -->
+  <script type="text/javascript" src="/scripts/prevent-page-scroll.js"></script>
+  <script type="text/javascript" src="/scripts/get-maps.js"></script>
+  <script type="text/javascript" src="/scripts/handle-login.js"></script>
+  <script type="text/javascript" src="/scripts/render-profile.js"></script>
+  <script type="text/javascript" src="/scripts/handle-likes-profile.js"></script>
+
+
 </head>
 
 <body style='padding-top: 6rem'>
   <main role="main">
-    <div id="content" class="clearfix py-5">
+    <div id="content" class="py-5">
       <div class="container">
         <div class="row">
           <div class="col-md-4">
-            <div id="userphoto"><img class='rounded' data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="User avatar"></div>
+            <div id="userphoto"><img class='rounded img-fluid' src="https://source.unsplash.com/collection/1236/300x300" alt="User avatar"></div>
           </div>
           <div class="col-md-8 py-2">
-            <h2 class="text-center">Username</h2>
+            <h2 class="text-center"><span class="username">Username</span></h2>
             <section id="user-stats ">
               <div class="row">
               <div class="col-sm-6 pt-5">
-                <p class="text-center font-weight-bold">1234</p>
+                <p class="text-center font-weight-bold" id="maps-created">0</p>
                   <p class="text-center font-weight-bold text-uppercase text-muted">Maps created</p>
               </div>
               <div class="col-sm-6 pt-5">
-                <p class="text-center font-weight-bold">1234</p>
+                <p class="text-center font-weight-bold" id="contributions-made">0</p>
                 <p class="text-center font-weight-bold text-uppercase text-muted">Contributions</p>
               </div>
             </div>
@@ -44,171 +57,49 @@
       <div class="album py-5 bg-light">
         <div class="container">
           <div class="col-md-12 pl-0">
-            <h2>User's maps</h2>
+            <h2><span class="username">User</span>'s maps</h2>
           </div>
           <div class="row">
             <!-- User map overview -->
-            <!-- Full VW row start -->
-            <div class="col-md-4">
-              <div class="card mb-4 box-shadow">
-                <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap">
-                <div class="card-body">
-                  <span class=font-weight-bold>User</span>
-                  <h4 class="card-text py-2">Greatest places to eat in Montreal</h4>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                    </div>
-                    <small class="text-muted">&hearts; 1234</small>
-                  </div>
-                </div>
-              </div>
+            <div class="col-md-4 users-map-1">
             </div>
-            <div class="col-md-4">
-              <div class="card mb-4 box-shadow">
-                <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap">
-                <div class="card-body">
-                  <span class=font-weight-bold>User</span>
-                  <h4 class="card-text py-2">Greatest places to eat in Montreal</h4>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                    </div>
-                    <small class="text-muted">&hearts; 1234</small>
-                  </div>
-                </div>
-              </div>
+            <div class="col-md-4 users-map-2">
             </div>
-            <div class="col-md-4">
-              <div class="card mb-4 box-shadow">
-                <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap">
-                <div class="card-body">
-                  <span class=font-weight-bold>User</span>
-                  <h4 class="card-text py-2">Greatest places to eat in Montreal</h4>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                    </div>
-                    <small class="text-muted">&hearts; 1234</small>
-                  </div>
-                </div>
-              </div>
+            <div class="col-md-4 users-map-3">
             </div>
           </div>
         </div>
       </div>
-      <!-- Full VW row end -->
-      <!-- User map overview end -->
       <!-- User contributed overview -->
       <!-- Full VW row start -->
       <div class="album py-5 bg-light">
         <div class="container">
           <div class="col-md-12 pl-0">
-            <h2>Maps user has contribute to</h2>
+            <h2>Maps <span class="username">user</span> has contribute to</h2>
           </div>
           <div class="row">
-            <div class="col-md-4">
-              <div class="card mb-4 box-shadow">
-                <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap">
-                <div class="card-body">
-                  <span class=font-weight-bold>User</span>
-                  <h4 class="card-text py-2">Greatest places to eat in Montreal</h4>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                    </div>
-                    <small class="text-muted">&hearts; 1234</small>
-                  </div>
-                </div>
-              </div>
+            <div class="col-md-4 users-contribution-1">
             </div>
-            <div class="col-md-4">
-              <div class="card mb-4 box-shadow">
-                <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap">
-                <div class="card-body">
-                  <span class=font-weight-bold>User</span>
-                  <h4 class="card-text py-2">Greatest places to eat in Montreal</h4>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                    </div>
-                    <small class="text-muted">&hearts; 1234</small>
-                  </div>
-                </div>
-              </div>
+            <div class="col-md-4 users-contribution-2">
             </div>
-            <div class="col-md-4">
-              <div class="card mb-4 box-shadow">
-                <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap">
-                <div class="card-body">
-                  <span class=font-weight-bold>User</span>
-                  <h4 class="card-text py-2">Greatest places to eat in Montreal</h4>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                    </div>
-                    <small class="text-muted">&hearts; 1234</small>
-                  </div>
-                </div>
-              </div>
+            <div class="col-md-4 users-contribution-3">
             </div>
           </div>
         </div>
       </div>
-      <!-- Full VW row end -->
-      <!-- User contributed end -->
       <!-- User favourite maps overview -->
       <!-- Full VW row start -->
       <div class="album py-5 bg-light">
         <div class="container">
           <div class="col-md-12 pl-0">
-            <h2>Users favourite maps</h2>
+            <h2><span class="username">User</span>'s favourite maps</h2>
           </div>
           <div class="row">
-            <div class="col-md-4">
-              <div class="card mb-4 box-shadow">
-                <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap">
-                <div class="card-body">
-                  <span class=font-weight-bold>User</span>
-                  <h4 class="card-text py-2">Greatest places to eat in Montreal</h4>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                    </div>
-                    <small class="text-muted">&hearts; 1234</small>
-                  </div>
-                </div>
-              </div>
+            <div class="col-md-4 users-favourite-1">
             </div>
-            <div class="col-md-4">
-              <div class="card mb-4 box-shadow">
-                <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap">
-                <div class="card-body">
-                  <span class=font-weight-bold>User</span>
-                  <h4 class="card-text py-2">Greatest places to eat in Montreal</h4>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                    </div>
-                    <small class="text-muted">&hearts; 1234</small>
-                  </div>
-                </div>
-              </div>
+            <div class="col-md-4 users-favourite-2">
             </div>
-            <div class="col-md-4">
-              <div class="card mb-4 box-shadow">
-                <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap">
-                <div class="card-body">
-                  <span class=font-weight-bold>User</span>
-                  <h4 class="card-text py-2">Greatest places to eat in Montreal</h4>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                      <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                    </div>
-                    <small class="text-muted">&hearts; 1234</small>
-                  </div>
-                </div>
-              </div>
+            <div class="col-md-4 users-favourite-3">
             </div>
           </div>
         </div>

@@ -1,16 +1,13 @@
 $(() => {
  $("html").on("click", ".like", function() {
     const $userID = Cookies.get("user_id");
-    console.log($userID)
     if ($userID) {
-      console.log("Like clicked");
-      const $mapID = window.location.pathname.toString().substr(6)
+      const $mapID = $(this).parent().parent().parent().parent().parent().data()
       $.ajax({
         type: "POST",
-        url: `/api/maps/${$mapID}`,
+        url: `/api/maps/${$mapID.mapid}`,
         data: { user_id: $userID },
         success: function(data) {
-          console.log("success");
         }
       });
 

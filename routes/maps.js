@@ -23,7 +23,7 @@ function aggregateData(data) {
 
     const markerObj = {
       marker_id: dataItem.marker_id,
-      map_id: dataItem.map_id,
+      marker_map_id: dataItem.marker_map_id,
       marker_title: dataItem.marker_title,
       marker_description: dataItem.marker_description,
       marker_coordinates: dataItem.marker_coordinates,
@@ -58,7 +58,7 @@ module.exports = knex => {
   }),
     router.get("/", (req, res) => {
       knex("maps")
-        .join("users", "users.id", "maps.user_id")
+        .leftJoin("users", "users.id", "maps.user_id")
         .select("username", "maps.id as id", "coordinates", "title")
         .then(results => {
           res.json(results);
@@ -66,9 +66,9 @@ module.exports = knex => {
     }),
     router.get("/:id", (req, res) => {
       knex("maps")
-        .join("users", "users.id", "maps.user_id")
-        .join("markers", "maps.id", "markers.map_id")
-        .join("favourites", "favourites.map_id", "maps.id")
+        .leftJoin("users", "users.id", "maps.user_id")
+        .leftJoin("markers", "maps.id", "markers.map_id")
+        .leftJoin("favourites", "favourites.map_id", "maps.id")
         .where("maps.id", req.params.id)
         .select(
           "username",
@@ -82,11 +82,12 @@ module.exports = knex => {
           "markers.description as marker_description",
           "markers.image_url as marker_img_url",
           "markers.coordinates as marker_coordinates",
-          "markers.map_id as map_id",
+          "markers.map_id as marker_map_id",
           "favourites.id as favourite_id",
           "favourites.user_id as favourite_user_id"
         )
         .then(map => {
+          console.log(map)
           const parseData = aggregateData(map);
           res.json(parseData);
         });
@@ -101,10 +102,9 @@ module.exports = knex => {
     }),
     router.post("/new", (req, res) => {
       // FIXME: user_id to grab user_id from cookie...
-
-      console.log(req.body)
+      console.log(req.body);
       const mapInput = {
-        user_id: 1
+        user_id: req.body.user_id,
       };
 
       const mapLocation = req.body.location;
@@ -119,34 +119,37 @@ module.exports = knex => {
       knex("maps")
         .insert(mapInput)
         .returning("*")
-        .then(([result])=> {
+        .then(([r]) => {
+          console.log(r, "returning");
+          console.log(r)
+          res.send(r);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+      // .then(([result])=> {
 
+      //   const favouriteObj = {user_id:1, map_id: result.id}
+      //   console.log(favouriteObj)
 
-          const favouriteObj = {user_id:1, map_id: result.id}
-          console.log(favouriteObj)
+      //   knex("favourites")
+      //     .insert(favouriteObj)
+      //     .returning("*")
+      //     .then(([result])=> {
+      //       const markerObj = {
+      //       user_id: 1,
+      //       map_id: result.map_id,
+      //       title: "Center of your map!",
+      //       image_url: "",
+      //       description:"",
+      //       coordinates: knex.raw(`point(${req.body.coordinates.lat},${req.body.coordinates.lng})`)}
 
-          knex("favourites")
-            .insert(favouriteObj)
-            .returning("*")
-            .then(([result])=> {
-              const markerObj = {
-              user_id: 1,
-              map_id: result.map_id,
-              title: "Center of your map!",
-              image_url: "",
-              description:"",
-              coordinates: knex.raw(`point(${req.body.coordinates.lat},${req.body.coordinates.lng})`)}
+      //       return knex("markers").insert(markerObj).returning("*")
 
-              return knex("markers").insert(markerObj).returning("*")
-
-          })
-            .then(([r]) => {
-              console.log(r);
-              res.send(r);
-            })
-          }),
+      //   })
+    }),
     router.post("/:id", (req, res) => {
-      console.log(req.body)
+      console.log(req.body);
       //FIXME: use user_id from cookie lmfao
 
       const favouriteObj = {
@@ -178,8 +181,7 @@ module.exports = knex => {
         })
         .catch(err => {
           console.log(err);
-        })
-    })
-  })
-  return router
-}
+        });
+    });
+  return router;
+};

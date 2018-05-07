@@ -3,11 +3,10 @@ function generateRandomImg() {
     .toString()
     .substr(3, 6);
   const collectionArr = [289662, 1625880, 1886495, 474683];
-  return `https://source.unsplash.com/collection/474683/288x255/?sig=${randomNumber}`;
+  return `https://source.unsplash.com/collection/499895/288x255/?sig=${randomNumber}`;
 }
 
 function createMapElement(map) {
-  // console.log(map)
   [id] = Object.keys(map);
   const { map_id, map_coordinates, map_creator } = map[id];
 
@@ -22,9 +21,13 @@ function createMapElement(map) {
   $mapImg = $("<div>")
     .addClass("card mb-4 box-shadow")
     .append(
-      $("<img>")
-        .addClass("card-img-top")
-        .attr("src", generateRandomImg())
+      $("<a>")
+        .attr("href", `/maps/${id}`)
+        .append(
+          $("<img>")
+            .addClass("card-img-top")
+            .attr("src", generateRandomImg())
+        )
     );
 
   return $mapContainer.append($mapImg.append($mapBody));
@@ -81,9 +84,14 @@ function createMapBody(map) {
   const $mapBody = $("<div>").addClass("card-body");
 
   const $mapCreator = $("<span>")
-    .addClass("font-weight-bold text-info")
-    .text(map_creator.username)
-    .attr("data-userid", map_creator.user_id);
+    .addClass("font-weight-bold")
+    .append(
+      $("<a>")
+        .attr("href", `/users/${map_creator.user_id}`)
+        .text(map_creator.username)
+        .css("text-decoration", "none")
+        .addClass("text-info")
+    );
 
   const $mapTitle = $("<h3>")
     .addClass("card-text py-2")
