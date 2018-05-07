@@ -19,7 +19,7 @@
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
   <!-- Internal Javascript -->
-
+<script type="text/javascript" src="/scripts/prevent-page-scroll.js"></script>
   <script type="text/javascript" src="/scripts/initMap.js"></script>
     <script type="text/javascript" src="/scripts/render-show-map.js"></script>
     <script type="text/javascript" src="/scripts/handle-login.js"></script>
@@ -39,18 +39,21 @@
     <div class="col-md-8" id="map-canvas"></div>
     <!-- find location -->
     <!-- find location -->
-
-            <form id ='location-form' method='POST'>
-             <div class="form-group">
-               <h2 id ='text-center'>Name of Map</h2>
-                <input type="text" class="form-control" id="map-title-input" value="Best coffee ever!" name="map_title">
-              </div>
-            <div id="enter-location">
-              <h2 id ='text-center'>Location</h2>
-              <input type="text" id='location-input' class="form-control form-control-lg" value="Toronto" name="location">
-              <br>
-              <button type='submit' class='btn btn-primary btn-block'>Submit</button>
-            </form>
+<div class="col-md-4">
+          <div class="container">
+          <form id ='location-form' method='POST'>
+           <div class="form-group">
+             <h2 id ='text-center'>Name of Map</h2>
+             <input type="text" class="form-control" id="map-title-input" value="Best coffee ever!" name="map_title">
+           </div>
+           <div id="enter-location">
+            <h2 id ='text-center'>Location</h2>
+            <input type="text" id='location-input' class="form-control form-control-lg" value="Toronto" name="location">
+            <br>
+            <button type='submit' class='btn btn-primary btn-block'>Submit</button>
+          </form>
+        </div>
+      </div>
     </main>
     <% include ./partials/_footer %>
 
