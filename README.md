@@ -1,29 +1,35 @@
-# Node Skeleton
+# Wiki Maps
 
-## Project Setup
+Wiki Maps is a web application that allows users to share their favourites spots with the world,
+users can search for a loaction and create maps with a topic, for example 'Best Coffee in Montreal'. Then users collabority share their favourite coffee shops in Montreal by placing markers on a map indicating their favourite spots.
 
-1. Create your own empty repo on GitHub
-2. Clone this repository (do not fork)
-  - Suggestion: When cloning, specify a different folder name that is relevant to your project
-3. Remove the git remote: `git remote rm origin`
-4. Add a remote for your origin: `git remote add origin <your github repo URL>`
-5. Push to the new origin: `git push -u origin master`
-6. Verify that the skeleton code now shows up in your repo on GitHub
+Users can view all maps on the home page whether they are logged in or not, however only authenticated users can create maps,modify maps (add, edit and remove markers) and favourite maps. Users have profiles that indcate their favourite maps as well as the maps that they have contributed to.
 
-## Getting Started
 
-1. Create the `.env` by using `.env.example` as a reference: `cp .env.example .env`
-2. Update the .env file with your correct local information
-3. Install dependencies: `npm i`
-4. Fix to binaries for sass: `npm rebuild node-sass`
-5. Run migrations: `npm run knex migrate:latest`
-  - Check the migrations folder to see what gets created in the DB
-6. Run the seed: `npm run knex seed:run`
-  - Check the seeds file to see what gets seeded in the DB
-7. Run the server: `npm run local`
-8. Visit `http://localhost:8080/`
+##Final Product
+
+
 
 ## Dependencies
 
-- Node 5.10.x or above
-- NPM 3.8.x or above
+- node
+- express
+- ejs
+- dotenv
+- cooke-session
+- knex
+- knex-logger
+- morgan
+- node-sass-middleware
+- pg
+
+## Getting Started
+
+1. Create the .evn with the correct local information
+2. Install dependencies: npm install
+3. Fix to binaries for sass: npm rebuild node-sass
+4. Run migrations: npm run latest
+5. Run the seed: npm run seed
+6. Run the server: npm run local
+7. Visit http://localhost:8080/
+
