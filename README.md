@@ -1,14 +1,15 @@
+
 # Wiki Maps
 
 Wiki Maps is a web application that allows users to share their favourites spots with the world,
 users can search for a loaction and create maps with a topic, for example 'Best Coffee in Montreal'. Then users collabority share their favourite coffee shops in Montreal by placing markers on a map indicating their favourite spots.
 
-Users can view all maps on the home page whether they are logged in or not, however only authenticated users can create maps,modify maps (add, edit and remove markers) and favourite maps. Users have profiles that indcate their favourite maps as well as the maps that they have contributed to.
-
+Users can view all maps on the home page whether they are logged in or not, however only authenticated users can create maps,modify maps (add, edit and remove markers) and favourite maps. Users have profiles that indicate their favourite maps as well as the maps that they have contributed to.
 
 ##Final Product
 
-
+!["Screenshot of the login page"]()
+!["Screenshot of the create new urls page"]()
 
 ## Dependencies
 
@@ -16,7 +17,7 @@ Users can view all maps on the home page whether they are logged in or not, howe
 - express
 - ejs
 - dotenv
-- cooke-session
+- cookies
 - knex
 - knex-logger
 - morgan
