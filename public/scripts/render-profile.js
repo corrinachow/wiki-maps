@@ -24,19 +24,19 @@ $(() => {
           method: "GET",
           url: `/api/maps/${user.contributions[i].markers_map_id}`
         }).done(map => {
-          $(`.users-contribution-${i}`).replaceWith(createMapElement(map));
+          $(`.users-contribution-${i+1}`).replaceWith(createMapElement(map));
         });
         $.ajax({
           method: "GET",
           url: `/api/maps/${user.favourites[i].map_id}`
         }).done(map => {
-          $(`.users-favourite-${i}`).replaceWith(createMapElement(map));
+          $(`.users-favourite-${i+1}`).replaceWith(createMapElement(map));
         });
         $.ajax({
           method: "GET",
           url: `/api/maps/${user.maps[i].map_id}`
         }).done(map => {
-          $(`.users-map-${i}`).replaceWith(createMapElement(map));
+          $(`.users-map-${i+1}`).replaceWith(createMapElement(map));
         });
       }
     })

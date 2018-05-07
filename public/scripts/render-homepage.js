@@ -1,6 +1,6 @@
 $(() => {
   $(".jumbotron")
-    .css("background","url(https://source.unsplash.com/collection/624382/1000x850)")
+    .css({"background":"url(https://source.unsplash.com/collection/624382/1000x850)", "background-size": "cover"})
   $.ajax({
     method: "GET",
     url: `/api/maps/`
