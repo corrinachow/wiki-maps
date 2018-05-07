@@ -22,13 +22,13 @@ $(window).on("load", function() {
         } // center of map
       };
       for (const marker of map.markers) {
-        const { marker_title, marker_description, marker_coordinates, marker_img_url } = marker;
+        const { marker_title, marker_description, marker_coordinates, marker_img_url, marker_id} = marker;
         const markerArray = [];
 
         console.log(map.markers)
 
         const { x, y } = marker_coordinates;
-        markerArray.push(marker_title, marker_description, x, y, marker_img_url);
+        markerArray.push(marker_title, marker_description, x, y, marker_img_url, marker_id);
         markers.push(markerArray);
       }
     })
@@ -64,11 +64,14 @@ function initMap() {
 
     // console.log(markers[i], 'new markers')
 
+    $markerImage = markers[i][4] || "https://source.unsplash.com/collection/610876/300x200"
+    console.log(markers[i][4])
     infoWindowContent.push(
-      [`<div style="display: flex; flex-direction: column; justify-content: center; align-items: center">
-        <img src=${markers[i][4]}>
+      [`<div style="display: flex; flex-direction: column; justify-content: center; align-items: center" data-markerid=${markers[i][5]}>
+        <img src=${$markerImage}>
         <h4>${markers[i][0]}</h4>
         <p>${markers[i][1]}</p>
+        <i title="Delete marker" class="far fa-trash-alt" onclick=deleteMarker(${markers[i][5]})></i>
         </div>`
       ])
 

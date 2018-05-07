@@ -13,21 +13,16 @@ module.exports = knex => {
       });
   }),
     router.post("/new", (req, res) => {
-      console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-      console.log(req.body);
-      console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-
       const markerInput = {
         user_id: req.body.user_id,
         map_id: req.body.map_id
       };
 
-
       let markerTitle = req.body.title;
       let markerImage = req.body.image_url;
       let markerDesc = req.body.description;
 
-      console.log(markerInput)
+      console.log(markerInput);
       markerInput["title"] = markerTitle;
       markerInput.map_id = req.body.map_id;
       markerInput["image_url"] = markerImage;
@@ -44,6 +39,12 @@ module.exports = knex => {
         .then(([r]) => {
           res.send(r);
         });
+    }),
+    router.post("/delete", (req, res) => {
+      knex("markers").where("id", Number(req.body.marker_id)).del().then(()=>{
+        res.status(200).send("Deleted")
+      })
+
     });
 
   return router;
