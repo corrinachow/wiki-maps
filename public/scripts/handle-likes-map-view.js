@@ -1,7 +1,5 @@
 $(() => {
-  console.log("Like handler loaded")
  $("html").on("click", ".like", function() {
-  console.log($(".like"))
     const $userID = Cookies.get("user_id");
     console.log($userID)
     if ($userID) {

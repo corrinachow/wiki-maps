@@ -148,7 +148,7 @@ function createMapLikes(map) {
 
   const $likeAmt = $("<span>")
     .addClass("py-0 font-weight-bold text-uppercase text-muted likes ml-2")
-    .text(`${favourites.length - 1}`);
+    .text(`${favourites.length}`);
 
 
   const $mapLikes = $("<div>")
