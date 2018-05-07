@@ -40,11 +40,29 @@ module.exports = knex => {
           res.send(r);
         });
     }),
+    router.post("/edit", (req, res) => {
+      console.log(req.body);
+      knex("markers")
+        .where("id", Number(req.body.marker_id))
+        .update({
+          title: req.body.title,
+          description: req.body.description,
+          image_url: req.body.image_url
+        })
+        .then(() => {
+          res.status(200).send("Updated");
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }),
     router.post("/delete", (req, res) => {
-      knex("markers").where("id", Number(req.body.marker_id)).del().then(()=>{
-        res.status(200).send("Deleted")
-      })
-
+      knex("markers")
+        .where("id", Number(req.body.marker_id))
+        .del()
+        .then(() => {
+          res.status(200).send("Deleted");
+        });
     });
 
   return router;
