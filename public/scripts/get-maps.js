@@ -57,14 +57,16 @@ function createMapActions(map) {
     .addClass("fas fa-heart like mx-2");
 
   for (const favourite of favourites) {
-    if (Cookies.get("user_id") == favourite.user_id) {
+    if (Cookies.get("user_id") == favourite.user_id && favourite.user_id) {
       $likeBtn.css("color", "rgb(255, 0, 0)");
     }
   }
 
+  const $likesAmt = favourites[0].favourite_id ? favourites.length : 0;
+
   const $likeCounter = $("<span>")
     .addClass("likes")
-    .text(favourites.length);
+    .text($likesAmt);
 
   const $mapLikes = $("<span>")
     .addClass("text-muted")

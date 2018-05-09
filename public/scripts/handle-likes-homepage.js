@@ -1,5 +1,4 @@
-$(window).on("load", function() {
-  console.log("loaded");
+$(()=> {
   $("html").on("click", ".like", function() {
     const $userID = Cookies.get("user_id");
 
