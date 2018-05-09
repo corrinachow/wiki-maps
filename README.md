@@ -16,24 +16,27 @@ Users can view all maps on the home page whether they are logged in or not, howe
 
 ## Dependencies
 
-- node
-- express
-- ejs
-- dotenv
-- cookies
-- knex
-- knex-logger
-- morgan
-- node-sass-middleware
+- Node 5.10.x or above
+- Express
+- EJS
+- Dotenv
+- body-parser
+- Cookies.js
+- Knex
+- Knex-logger
+- Morgan
+- Node-sass-middleware
 - pg
+- Faker
+- Nodemon
 
 ## Getting Started
 
-1. Create the .evn with the correct local information
-2. Install dependencies: npm install
-3. Fix to binaries for sass: npm rebuild node-sass
-4. Run migrations: npm run latest
-5. Run the seed: npm run seed
-6. Run the server: npm run local
+1. Create the .ENV with the correct local information
+2. Install dependencies using `npm install`
+3. Fix to binaries for sass: `npm rebuild node-sass`
+4. Run migrations: `npm run knex migrate:latest`
+5. Run the seed: `npm run knex seed:run`
+6. Run the server: `npm run local`
 7. Visit http://localhost:8080/
 
